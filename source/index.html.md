@@ -1,15 +1,14 @@
 ---
-title: API Reference
+title: Paymentshield REST API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
-  - ruby
-  - python
+  - http
   - javascript
+  - cs
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
+  - <a href='https://github.com/paymentshield/api-docs'>Contribute</a>
 
 includes:
   - errors
@@ -19,221 +18,165 @@ search: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to our API! We have built our new REST API with you in mind, to make it easier for integrators to quote, sell, and deliver Paymentshield insurance policies in a secure and accessible way.
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+Our API is composed of a number of services separated by function and hosted in isolation, but you can access them all through one easy URL scheme.
 
-This example API documentation page was created with [Slate](https://github.com/lord/slate). Feel free to edit it and use it as a base for your own API's documentation.
+Our APIs to date are:
+
+ * Security Service
+ * Quote Service
+ * Documents Service
+ * Catalogue Service
+
+
+# Register to use the API
+
+To integrate with us and start exploring and selling PSL policies, please visit our [Developer portal][developerportal] and complete the signup form to receive your `SystemId` and Test User credentials.
+
+
+
+# General API Principles
+
+ + All message bodies (requests and responses) are raw JSON: set `content-type` header to `application/json`
+ + We currently use verbs `GET` and `POST`:
+     - `GET` is idempotent, with no side-effects.
+	 - `POST` is used for functions which have an effect on system and data state.
+ + Responses have an informative HTTP Status:
+     - 200 OK
+     - 201 Created
+     - 400 Bad Request
+     - 401 Unauthenticated
+     - 403 Forbidden
+     - 500 Server Error
+ + Response bodies have an additional `StatusCode` field to give fine-grained error information
+ + Response bodies will have an array of `Messages` which is populated if there are problems with the data you send us
+ + Swagger (OpenAPI) definitions are available for each service
+
 
 # Authentication
 
-> To authorize, use this code:
+We have a custom authentication flow which is enforced by our backend system, rather than using OAuth or similar.
 
-```ruby
-require 'kittn'
+The general flow of authentication is like this:
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
+ + Authenticate with our `SecurityService` by sending either `email`+`password` or `userid`+`passkey` in a JSON body
+ + We'll send/echo back your `UserId` (a constant, unique integer ID) and a session `Token` (GUID) which is valid for 40 minutes. The Token's validity is reset to the full time whenever it is used for an authenticated API call. You can store the `Token` in local storage within your app.
+ + You should know your `SystemId`, a GUID identifying the piece of software calling the API. This is somewhat like an API key (with the `UserId` and `Token` together forming a kind of API secret).
+ + In all subsequent requests to any of our API services, send the `UserId`, `Token`, and `SystemId` in **HTTP headers**.
 
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
-
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+```http
+POST https://api.paymentshield.co.uk/v1/security/login HTTP/1.1
+Content-Type: application/json
+{
+    "Email": "broker@example.com", 
+    "Password": "BrokerPassword"
+}
 ```
 
 ```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
+// TODO: JavaScript sample with Fetch API
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+```cs
+// TODO: C# Sample with WebClient
+```
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+> Replace the `Email` and `Password` fields with your credentials
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+# Error Handling
 
-`Authorization: meowmeowmeow`
+This is how we use HTTP status codes:
+
+HTTP status | Meaning
+----------- | -------
+400         | Something was incorrect or missing in your request object. More information will be given in the `StatusCode` and `Messages` elements of the response.
+401         | Unauthenticated - Your request didn't appear to be from a valid user. Maybe the credentials were missing or wrong, or don't work with the SystemId provided, or perhaps your Session has expired.
+403         | Unauthorized - Your credentials are valid but the specified user isn't allowed to do the task you tried to do. This might be because of a product restriction or because you are trying to look at another users' data.
+500         | Server Error - Generally a failure on our part or an impossible-to-fulfil request.
+
+In many cases, we return additional information in the JSON response body in the `StatusCode` and `Messages` parameters.
+
+~~~json
+{
+    "StatusCode": "OK",
+    "Messages":
+	[
+		{
+			// Message structure...
+		}
+	]
+}
+~~~
+
+# Services and Resources
+
+## Quote Service
+
+You can use the Quote Service to get Quotes and QuickQuotes, retrieve those you created earlier, and continue an in-progress Quote. The Quote service relies upon some external services to PSL to get prices, which can mean it takes a while to get prices, particularly for complex quotes featuring multiple tiers of cover.
+
+### Create Quote
+
+Create a new full or partial, complete or incomplete Quote Request. A *Quote Request* is our term for a well-specified request for insurance quotes, for a given customer, based on the customer information you provide. As long as your request provides a non-trivial amount of information, a Quote Request will be created in our database and we will pass back a `QuotesResponse` with a `QuoteRequestId`. From here, you can add more information later using **Update Quote** or you can continue the user journey in our web frontend using the `ContinuationUri` in the response.
+
+Please see the code pane for an example of the HTTP headers and JSON request you should send.
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+To find out what values you should send in the <code>Answers</code> array, you can use the Catalogue API Questionset endpoint, or our <a href="#">Questionset browser</a>
 </aside>
 
-# Kittens
+#### ProductId
 
-## Get All Kittens
+Not all integrators can sell the full range of products. If you want to be authorised to sell a different range of products, please [Get in touch][contact]
 
-```ruby
-require 'kittn'
+ProductId | Product
+--------- | -------
+1008      | Home - Buildings and Contents
+1009      | Landlords - Buildings and Contents
+1013      | Tenants Contents
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
+```http
+POST https://api.paymentshield.co.uk/v1/Quote/ HTTP/1.1
+Content-Type: application/json
+UserId: 123456
+Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
+SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
 ```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "ProductId": 1008,
+  "BranchNumber": "PS000000",
+  "UseDefaults": true,
+  "IsIndicativeQuote": false,
+  "HasAssumedAnswers": false,
+  "CommissionSacrifice": 0,
+  "Answers": [
+    {
+      "Value": "Mrs",
+      "InterfaceKey": "Applicant1Title"
+    },
+    {
+      "Value": "Kayleigh",
+      "InterfaceKey": "Applicant1Forename"
+    },
+    {
+      "Value": "Porter",
+      "InterfaceKey": "Applicant1Surname"
+    },
+    ...
+    {
+      "Value": "One",
+      "InterfaceKey": "NumberOfBedrooms"
+    },
+    {
+      "Value": "Flat",
+      "InterfaceKey": "PropertyType"
+    },
+    ...
+  ]
 }
 ```
 
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
-```
-
-This endpoint deletes a specific kitten.
-
-### HTTP Request
-
-`DELETE http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
-
+[contact]: https://paymentshield.co.uk
+[developerportal]: https://paymentshield.co.uk
