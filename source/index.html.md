@@ -10,7 +10,8 @@ toc_footers:
   - <a href='https://github.com/paymentshield/api-docs'>Contribute</a>
 
 includes:
-  - errors
+  - quote
+  - document
 
 search: true
 ---
@@ -32,7 +33,6 @@ Our APIs to date are:
 # Register to use the API
 
 To integrate with us and start exploring and selling PSL policies, please visit our [Developer portal][developerportal] and complete the signup form to receive your `SystemId` and Test User credentials.
-
 
 
 # General API Principles
@@ -84,11 +84,12 @@ The general flow of authentication is like this:
 
 ~~~json
 {
-    "StatusCode": "OK",
+    "StatusCode": "ClientError",
     "Messages":
 	[
 		{
-			// Message structure...
+            "MessageType": "Authentication",
+            "Summary": "Sorry, we couldn’t log you in with those details. Please check and try again"
 		}
 	]
 }
@@ -105,75 +106,28 @@ HTTP  | Meaning
 
 In many cases, we return additional information in the JSON response body in the `StatusCode` and `Messages` parameters.
 
+### StatusCode
 
-# Services and Resources
+StatusCode            | Meaning
+--------------------- | -------
+EmptyRequest          | We couldn't see or understand your JSON Body data
+ServerError           | A problem with our service
+ClientError           | A problem with your request
+AuthenticationRefused | `UserId` and `Token` (or `SystemId`) are wrong, or the session expired
+UserLockedOut         | The supplied `UserId` has been locked out by an administrator
+AuthorisationRefused  | The supplied user isn't allowed to complete the specified action
+NotAllowed            | The supplied user isn't allowed to complete the specified action
 
-## Quote Service
+### MessageType
 
-```http
-POST https://api.paymentshield.co.uk/v1/Quote/ HTTP/1.1
-Content-Type: application/json
-UserId: 123456
-Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
-SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
-```
-
-```json
-{
-  "ProductId": 1008,
-  "BranchNumber": "PS000000",
-  "UseDefaults": true,
-  "IsIndicativeQuote": false,
-  "HasAssumedAnswers": false,
-  "CommissionSacrifice": 0,
-  "Answers": [
-    {
-      "Value": "Mrs",
-      "InterfaceKey": "Applicant1Title"
-    },
-    {
-      "Value": "Kayleigh",
-      "InterfaceKey": "Applicant1Forename"
-    },
-    {
-      "Value": "Porter",
-      "InterfaceKey": "Applicant1Surname"
-    },
-    ...
-    {
-      "Value": "One",
-      "InterfaceKey": "NumberOfBedrooms"
-    },
-    {
-      "Value": "Flat",
-      "InterfaceKey": "PropertyType"
-    },
-    ...
-  ]
-}
-```
-
-You can use the Quote Service to get Quotes and QuickQuotes, retrieve those you created earlier, and continue an in-progress Quote. The Quote service relies upon some external services to PSL to get prices, which can mean it takes a while to get prices, particularly for complex quotes featuring multiple tiers of cover.
-
-### Create Quote
-
-Create a new full or partial, complete or incomplete Quote Request. A *Quote Request* is our term for a well-specified request for insurance quotes, for a given customer, based on the customer information you provide. As long as your request provides a non-trivial amount of information, a Quote Request will be created in our database and we will pass back a `QuotesResponse` with a `QuoteRequestId`. From here, you can add more information later using **Update Quote** or you can continue the user journey in our web frontend using the `ContinuationUri` in the response.
-
-Please see the code pane for an example of the HTTP headers and JSON request you should send.
-
-<aside class="notice">
-To find out what values you should send in the <code>Answers</code> array, you can use the Catalogue API Questionset endpoint, or our <a href="#">Questionset browser</a>
-</aside>
-
-#### ProductId
-
-Not all integrators can sell the full range of products. If you want to be authorised to sell a different range of products, please [Get in touch][contact]
-
-ProductId | Product
---------- | -------
-1008      | Home - Buildings and Contents
-1009      | Landlords - Buildings and Contents
-1013      | Tenants Contents
+MessageType    | Meaning
+-------------- | -------
+Authentication | Problem with the authentication details (headers) provided
+Mandatory      | Problem with an Answer which is mandatory and for which you didn't provide a value
+Invalid        | Problem with an Answer with validation criteria which weren't met
+Quote          | Problem with quote retrieval or insurability of the submitted data
+Error          | Problem with our service or a third party service dependency
+Generic        | Fallback error designation
 
 
 [contact]: https://paymentshield.co.uk
