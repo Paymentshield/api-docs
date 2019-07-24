@@ -59,6 +59,8 @@ Create a new full or partial, complete or incomplete Quote Request. A *Quote Req
 
 Please see the code pane for an example of the HTTP headers and JSON request you should send.
 
+You can find the types and examples of each request field in the Swagger definition of the API.
+
 <aside class="notice">
 To find out what values you should send in the <code>Answers</code> array, you can use the Catalogue API Questionset endpoint, or our <a href="#">Questionset browser</a>
 </aside>
@@ -77,8 +79,15 @@ ProductId | Product
 1013      | Tenants Contents (2018)
 
 
+### Other field notes
+
+ + We recommend that `UseDefaults` is set to true. It sets some Answers, including calculated Answers (total coverage value for STIP/MPPI), to their sensible default or calculated value if you don't specify one.
+
+
 ## Retrieve Quote
 
+ > Retrieve a set of Quotes by QuoteRequestId
+ 
 ```http
 GET https://api.paymentshield.co.uk/v1/Quote/{QuoteRequestId} HTTP/1.1
 UserId: 123456
@@ -93,6 +102,8 @@ Pass the integer `QuoteRequestId` from the original Quote Response.
 
 ## Create QuickQuote
 
+ > Create a QuickQuote
+ 
 ```http
 POST https://api.paymentshield.co.uk/v1/QuickQuote/ HTTP/1.1
 Content-Type: application/json
@@ -147,7 +158,7 @@ SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
 }
 ```
 
-A QuickQuote is an indicative price which you can get by submitting less information about the customer. You can allow your customer to pick up their QuickQuote journey in our frontend using a QuickQuoteContinuationLink or you can promote it into a full quote.
+A QuickQuote is an indicative price which you can get by submitting less information about the customer. You can allow your customer to pick up their QuickQuote journey in our frontend using the `QuickQuoteContinuationUri`. In the next phase of our API, you will be able to promote it into a full quote.
 
 Today, QuickQuote is only implemented for Home insurance (product 1008).
 
@@ -172,17 +183,30 @@ You must supply the following answers as a minimum:
  * InsuredAddressTown
  * InsuredAddressCounty
 
+### QuickQuotesResponse
+
+We deliver a `QuickQuotesResponse` in response to both the 'Create' and 'Get' QuickQuote operations. This object has some differences from a normal QuotesResponse:
+
+ + It has a `QuickQuoteContinuationUri` instead of `QuoteSessionContinuationUri`
+ + Only the cheapest Price is returned, instead of many prices
+
 
 ## Retrieve QuickQuote
 
+> Retrieve a QuickQuote the same way you retrieve a Quote
+
 ```http
-GET https://api.paymentshield.co.uk/v1/QuickQuote/{QuoteRequestId} HTTP/1.1
+GET https://api.paymentshield.co.uk/v1/Quote/{QuoteRequestId} HTTP/1.1
 UserId: 123456
 Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
 SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
 ```
 
-Retrieve a fully-hydrated QuickQuote Response from a previously created QuickQuote.
+You can retrieve a QuickQuote the same way you would [Retrieve a quote](#retrieve-quote), passing the integer `QuoteRequestId` from the original QuickQuote Response.
 
-Pass the integer `QuoteRequestId` from the original QuickQuote Response.
+If the user has progressed a QuickQuote by adding information, so that it now has many prices, then we return a full `QuotesResponse`.
+
+
+
+
 

@@ -16,7 +16,7 @@ includes:
 search: true
 ---
 
-# Introduction
+# Paymentshield REST API Reference
 
 Welcome to our API! We have built our new REST API with you in mind, to make it easier for integrators to quote, sell, and deliver Paymentshield insurance policies in a secure and accessible way.
 
