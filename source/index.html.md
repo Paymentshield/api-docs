@@ -56,7 +56,7 @@ To integrate with us and start exploring and selling PSL policies, please visit 
 # Authentication
 
 ```http
-POST https://api.paymentshield.co.uk/v1/security/login HTTP/1.1
+POST https://api.paymentshield.co.uk/security/login HTTP/1.1
 Content-Type: application/json
 {
     "Email": "broker@example.com", 

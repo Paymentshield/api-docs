@@ -13,7 +13,7 @@ A **QuoteRequest** is a well-defined request for cover which we submit to one or
 ## Create Quote
 
 ```http
-POST https://api.paymentshield.co.uk/v1/Quote/ HTTP/1.1
+POST https://api.paymentshield.co.uk/Quote/ HTTP/1.1
 Content-Type: application/json
 UserId: 123456
 Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
@@ -89,7 +89,7 @@ ProductId | Product
  > Retrieve a set of Quotes by QuoteRequestId
  
 ```http
-GET https://api.paymentshield.co.uk/v1/Quote/{QuoteRequestId} HTTP/1.1
+GET https://api.paymentshield.co.uk/Quote/{QuoteRequestId} HTTP/1.1
 UserId: 123456
 Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
 SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
@@ -105,7 +105,7 @@ Pass the integer `QuoteRequestId` from the original Quote Response.
  > Create a QuickQuote
  
 ```http
-POST https://api.paymentshield.co.uk/v1/QuickQuote/ HTTP/1.1
+POST https://api.paymentshield.co.uk/QuickQuote/ HTTP/1.1
 Content-Type: application/json
 UserId: 123456
 Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
@@ -196,7 +196,7 @@ We deliver a `QuickQuotesResponse` in response to both the 'Create' and 'Get' Qu
 > Retrieve a QuickQuote the same way you retrieve a Quote
 
 ```http
-GET https://api.paymentshield.co.uk/v1/Quote/{QuoteRequestId} HTTP/1.1
+GET https://api.paymentshield.co.uk/Quote/{QuoteRequestId} HTTP/1.1
 UserId: 123456
 Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
 SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8

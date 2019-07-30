@@ -7,7 +7,7 @@ You can use the Document Service to get a list of the Documents available for a 
  > Get a list of Documents by QuoteRequestId
  
 ```http
-GET https://api.paymentshield.co.uk/v1/Documents/{QuoteRequestId} HTTP/1.1
+GET https://api.paymentshield.co.uk/Documents/{QuoteRequestId} HTTP/1.1
 UserId: 123456
 Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
 SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
@@ -16,7 +16,7 @@ SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
  > Get a list of Documents by QuoteId
  
 ```http
-GET https://api.paymentshield.co.uk/v1/Documents/{QuoteId:GUID} HTTP/1.1
+GET https://api.paymentshield.co.uk/Documents/{QuoteId:GUID} HTTP/1.1
 UserId: 123456
 Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
 SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
