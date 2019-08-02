@@ -142,35 +142,56 @@ Within each entry in the documents list:
  
 ### Document Codes
 
-The `Code` of a document node is drawn from this table:
+The valid options for document `Code` are listed below:
 
 Code     | Significance and other names
 -------- | ----------------------------
-quote    | Quote Summary (Price Summary)
-ipid     | Insurance Product Information Document, or IPID (Policy Summary)
-terms    | Policy Booklet (Terms and Conditions)
-idd      | Key Facts (IDD Document)
-sdn      | Statement of Demands and Needs
-qas      | Quote and Application Summary
-multiquote | All Quotes Summary (Multiple Price Summary)
+quote       | Quote Summary (Price Summary)
+ipid        | Insurance Product Information Document, or IPID (Policy Summary)
+terms       | Policy Booklet (Terms and Conditions)
+sdn         | Statement of Demands and Needs.  Only available when the `QuoteStatus` is `SUBMITTED`
+qas         | Quote and Application Summary.  Only available when the `QuoteStatus` is `SUBMITTED`
+multiquote  | All Quotes Summary (Multiple Price Summary)
 
 
 ### Differences in retrieving docs by QuoteRequest or Quote
 
-A QuoteRequest has many quotes, so there will be more entries of certain document types when you get the list for an entire QuoteRequest compared to that for an individual quote:
+A QuoteRequest may have many quotes.  This means there could be more entries of certain document types when you get the list for an entire `QuoteRequest` compared to that for an individual `QuoteId`. 
+This is summarised in the table below:
 
 Document | For QuoteRequest         | For Quote
 -------- | ------------------------ | --------
-IPID (Policy Summary)  | Always one entry | Always one entry
-Policy Booklet (Terms) | Always one entry | Always one entry
-Quote Summary (Price Summary)  | One entry for **each price** in the QuotesResponse | One entry for the specified quote
-All Quotes Summary (Multiple Price Summary) | One entry, aggregating all the quotes | None
-Quote & Application Summary | One, for the applied-for quote | One, for the applied-for quote
-Statement of Demands and Needs | One, after applying for a quote | One, after applying for a quote
+IPID       | Always one entry                                        | Always one entry
+Terms      | Always one entry                                        | Always one entry
+Quote      | One entry for each **QuoteId** in the QuotesResponse    | One entry for the specified quote
+Multiquote | One entry, aggregating all the qualifying quotes        | None
+QAS        | One, for the applied-for quote                          | One, for the applied-for quote
+SDN        | One, after applying for a quote                         | One, after applying for a quote
 
 
 
 ## Get Document
 
 Your primary way to discover Get Document links is to follow those returned in a Documents list response.
+
+```http
+GET https://api.paymentshield.co.uk/Document/quote/monthly/37b322f5-8240-48a5-b362-000bddb544b3.pdf HTTP/1.1
+UserId: 123456
+Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
+SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
+```
+You can use the `Link` returned for each document to retrieve the document as pdf.  You can request the document as a base64 string by removing **.pdf** from the Link.
+
+You can also construct a Get Document request string if the Quote Request or QuoteId is known and you know which document you want to retrieve:
+
+
+Document     | Request string
+-------- | ----------------------------
+IPID       | https://api.paymentshield.co.uk/Document/ipid/{QuoteRequestId}
+Terms      | https://api.paymentshield.co.uk/Document/terms/{QuoteRequestId}
+Quote      | https://api.paymentshield.co.uk/Document/quote/{PaymentFrequency}/{QuoteId}
+QAS        | https://api.paymentshield.co.uk/Document/qas/{QuoteId}
+SDN        | https://api.paymentshield.co.uk/Document/sdn/{QuoteId}
+
+
 

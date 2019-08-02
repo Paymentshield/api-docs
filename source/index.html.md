@@ -12,6 +12,7 @@ toc_footers:
 includes:
   - quote
   - document
+  - catalogue
 
 search: true
 ---
