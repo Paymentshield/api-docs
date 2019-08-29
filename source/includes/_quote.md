@@ -390,7 +390,63 @@ QuoteSessionContinuationUri | This is returned in a successful Post and Get Quot
 QuoteRequestContinuationUri | This is returned in a successful Post Quote response and in a Get Quote response providing neither the quote request nor any of its linked quotes have been applied for.  The `QuoteRequestContinuationUri` will transfer the user to the latest point in the quote sent in the request.
 QuickQuoteContinuationUri   | This is returned in a successful Post QuickQuote response.  The Uri can be used to transfer the user to our web based quote and apply journey to confirm assumptions and continue to generate a full quote.
 
+## Create Partial Quote
 
+ > Json showing the IsPartialQuote parameter used to create a Partial Quote
+ 
+ ```json
+{
+  "ProductId": 1008,
+  "BranchNumber": "AB000000",
+  "UseDefaults": true,
+  "IsIndicativeQuote": false,
+  "HasAssumedAnswers": false,
+  "CommissionSacrifice": 0,
+  "IsPartialQuote": true,
+  "Answers": [
+    {
+      "Value": "Mrs",
+      "InterfaceKey": "Applicant1Title"
+    },
+    {
+      "Value": "Kayleigh",
+      "InterfaceKey": "Applicant1Forename"
+    },
+    {
+      "Value": "Porter",
+      "InterfaceKey": "Applicant1Surname"
+    },
+    ...
+    {
+      "Value": "One",
+      "InterfaceKey": "NumberOfBedrooms"
+    },
+    {
+      "Value": "Flat",
+      "InterfaceKey": "PropertyType"
+    },
+    ...
+  ]
+}
+```
+
+There are two main reasons that you might build your integration to submit ['partial' quote requests][partial]:
+
+ 1. If you want to start a quote with a small amount of information, save it, and resume the journey later in our web frontend (sometimes called *IOL* or *Adviser Hub*).
+ 2. If you want to capture some information in your application, and transfer right away to our web frontend to complete the quote and buy journey.
+ 
+If you send the `IsPartialQuote` parameter with a value of `true` in a [POST Quote request][postquote], then we skip part of the validation logic, so that the request is not refused, but instead returns a response where the `QuoteStatus` is `INPROGRESS`.
+
+If omitted, the `IsPartialQuote` value defaults to `false`.
+ 
+In the response, you will receive a `QuoteRequestId` and a `QuoteSessionContinuationUri` that you can use to transfer to our quote and apply journey to complete the remaining questions and obtain a full quote.  When you transfer to our journey the answers you provided will be pre-populated.
+
+<aside class="notice">
+If you send a Quotes request with <code>IsPartialQuote</code> set to <code>true</code>, but send answers to all mandatory questions, the <code>QuoteStatus</code> will be returned as <code>QUOTESRETRIEVED</code> and the QuoteSessionContinuationUri will take the user to the <b>Quotes Results page</b> where they can continue with the Quote journey.  We will not return prices in the response if the <code>IsPartialQuote</code> flag is used.
+</aside>
+
+[partial]: #full-vs-partial-integration
+[postquote]: #create-quote
 
 ## Create QuickQuote
 
@@ -486,7 +542,7 @@ We deliver a `QuickQuotesResponse` in response to both the 'Create' and 'Get' Qu
 
  + It has a `QuickQuoteContinuationUri` instead of `QuoteSessionContinuationUri`
  + Only the cheapest Price is returned, instead of many prices
- + We confirm the source of each `Value` in the `Answers` array using a `Source` field which will either return as 'User' if supplied in the request or 'PSL' if the value has been assumed.
+ + We confirm the source of each `Value` in the `Answers` array using a `Source` field which will either return as 'User' if supplied in the request or 'assumed' if the value has been assumed.
 
 ## Retrieve Quote
 
@@ -517,6 +573,7 @@ Pass the integer `QuoteRequestId` from the original Quote Response.
     "ProductId": "1008",
     "QuoteSessionId": "1fa06ed9-64f0-4ee3-be1f-c123c45c6d7f",
     "QuoteSessionContinuationUri": "http://test3.paymentshield-advisers.co.uk/QuoteRequests/LoginWithAccessToken?userId=336427&token=5689552a-4608-44b3-b554-5c02408304d6&redirectUri=%2FQuoteRequests%2FContinueQuoteSession%2F1fa06ed9-64f0-4ee3-be1f-c123c45c6d7f",
+	"QuoteRequestContinuationUri": "http://test3.paymentshield-advisers.co.uk/QuoteRequests/LoginWithAccessToken?userId=336427&token=5689552a-4608-44b3-b554-5c02408304d6&redirectUri=%2FQuoteRequests%2FContinue%2F640111",
     "QuoteDate": "2019-08-01T10:41:11.43",
     "QuoteExpiryDate": "2019-09-30T00:00:00",
     "IsMultiTier": true,
