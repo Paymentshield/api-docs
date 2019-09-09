@@ -4,7 +4,7 @@ You can use the Quote Service to get Quotes and QuickQuotes and retrieve those y
 
 ### Full vs Partial integration
 
-We use the term 'full integration' to mean integrations which complete a quote and buy journey using only API endpoints. In contrast, a 'partial integration' gets a quote or quick quote from the API and then uses a ContinuationUri that we provide to transfer the user for them to complete the journey in our web frontend (sometimes called *IOL* or *Adviser Hub*).
+We use the term 'full integration' to mean integrations which complete a quote and buy journey using only API endpoints. In contrast, a 'partial integration' gets a quote or quick quote from the API and then uses a ContinuationUri that we provide to transfer the user for them to complete the journey in our Adviser Hub web frontend.
 
 ### QuoteRequests and Quotes
 
@@ -432,7 +432,7 @@ QuickQuoteContinuationUri   | This is returned in a successful Post QuickQuote r
 
 There are two main reasons that you might build your integration to submit ['partial' quote requests][partial]:
 
- 1. If you want to start a quote with a small amount of information, save it, and resume the journey later in our web frontend (sometimes called *IOL* or *Adviser Hub*).
+ 1. If you want to start a quote with a small amount of information, save it, and resume the journey later in our Adviser Hub web frontend.
  2. If you want to capture some information in your application, and transfer right away to our web frontend to complete the quote and buy journey.
  
 If you send the `IsPartialQuote` parameter with a value of `true` in a [POST Quote request][postquote], then we skip part of the validation logic, so that the request is not refused, but instead returns a response where the `QuoteStatus` is `INPROGRESS`.

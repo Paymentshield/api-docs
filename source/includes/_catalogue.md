@@ -8,7 +8,7 @@ You can use the Catalogue Service to retrieve industry and occupation lists.  Yo
 > Example industry request without filter
 
 ```http
-GET http://s-pstest-web002.paymentshield.co.uk/industries HTTP/1.1
+GET http://api.paymentshield.co.uk/industries HTTP/1.1
 UserId: 123456
 Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
 SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
