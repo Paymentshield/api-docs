@@ -3,7 +3,7 @@ title: Paymentshield REST API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - http
-  - javascript
+  - php
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
@@ -37,8 +37,8 @@ To integrate with us and start exploring and selling PSL policies, please visit 
 
 # Environments
 
-The code samples on this page use the live (production) environment, but for integration, you should use UAT.
-The Live environment will create real quotes and policies in our live system.
+The code samples on this page use the UAT environment, which you should use for integration.
+When you go to production, use the Live environment, which will create real quotes and policies in our live system.
 
 Environment | Base URL
 ----------- | -------
@@ -66,8 +66,44 @@ Live        | https://api.paymentshield.co.uk
 
 # Authentication
 
+```php
+<?php
+
+$data = [
+	'Email' => 'broker@example.com',
+	'Password' => 'BrokerPassword'
+];
+
+$url  = 'https://apiuat.paymentshield.co.uk/Security/Login';
+$json = json_encode($data);
+$curl = curl_init();
+
+curl_setopt_array($curl, [
+  CURLOPT_URL => $url,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => $json,
+  CURLOPT_HTTPHEADER => [
+	"Content-Type: application/json"
+  ]
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+$response = $err
+	? "cURL Error $err"
+	: $response;
+```
+
 ```http
-POST https://api.paymentshield.co.uk/security/login HTTP/1.1
+POST https://apiuat.paymentshield.co.uk/security/login HTTP/1.1
 Content-Type: application/json
 {
     "Email": "broker@example.com", 
@@ -75,10 +111,10 @@ Content-Type: application/json
 }
 ```
 
-> Replace the `Email` and `Password` fields with your credentials
+> Replace the `Email` and `Password` fields with your credentials.
 
 ```http
-POST https://api.paymentshield.co.uk/security/login HTTP/1.1
+POST https://apiuat.paymentshield.co.uk/security/login HTTP/1.1
 Content-Type: application/json
 {
     "UserId": "123456", 
@@ -86,16 +122,18 @@ Content-Type: application/json
 }
 ```
 
-> You can use `UserId` and `Passkey` authentication instead of email and password.
+> You can use `UserId` and `Passkey` authentication instead of email and password. The UserId is also known as Seller Number.
 
-We have a custom authentication flow which is enforced by our backend system, rather than using OAuth or similar.
+
+
+We have a custom authentication scheme due to our internal system; we don't use OAuth or similar.
 
 The general flow of authentication is like this:
 
- + Authenticate with our `SecurityService` by POSTing either `email`+`password` or `userid`+`passkey` in a JSON body
- + We'll send/echo back your `UserId` (a constant, unique integer ID) and a session `Token` (GUID) which is valid for 40 minutes. The Token's validity is reset to the full time whenever it is used for an authenticated API call. You can store the `Token` in local storage within your app.
- + You should know your `SystemId`, a GUID identifying the piece of software calling the API. This is somewhat like an API key (with the `UserId` and `Token` together forming a kind of API secret).
- + In all subsequent requests to any of our API services, send the `UserId`, `Token`, and `SystemId` in **HTTP headers**.
+ 1. Authenticate by POSTing either `email`+`password` or `userid`+`passkey` in a JSON body to the Login endpoint
+ 2. We'll send back a response containing your `UserId` (a constant, unique integer ID) and a session `Token` (GUID) which is valid for 40 minutes. The Token's validity is reset to the full time whenever it is used for an authenticated API call. You can store the `Token` in local storage within your app.
+ 3. You should know your `SystemId`, a GUID identifying the piece of software calling the API. This is somewhat like an API key (with the `UserId` and `Token` together forming a kind of API secret).
+ 4. In all subsequent requests to any of our API services, send the `UserId`, `Token`, and `SystemId` in **HTTP headers**.
 
 ### Login
 

@@ -7,7 +7,7 @@ You can use the Document Service to get a list of the Documents available for a 
  > Get a list of Documents by QuoteRequestId
  
 ```http
-GET https://api.paymentshield.co.uk/Documents/{QuoteRequestId} HTTP/1.1
+GET https://apiuat.paymentshield.co.uk/Documents/{QuoteRequestId} HTTP/1.1
 UserId: 123456
 Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
 SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
@@ -16,7 +16,7 @@ SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
  > Get a list of Documents by QuoteId
  
 ```http
-GET https://api.paymentshield.co.uk/Documents/{QuoteId:GUID} HTTP/1.1
+GET https://apiuat.paymentshield.co.uk/Documents/{QuoteId:GUID} HTTP/1.1
 UserId: 123456
 Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
 SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
@@ -36,14 +36,14 @@ Returns a list of documents for the given `QuoteRequestId` or `QuoteId`
             "Name": "Policy Booklet",
             "Code": "terms",
             "Type": "static",
-            "Link": "https://api.paymentshield.co.uk/Document/terms/633360.pdf"
+            "Link": "https://apiuat.paymentshield.co.uk/Document/terms/633360.pdf"
         },
         {
             "QuoteRequestId": 633360,
             "Name": "Insurance Product Information Document",
             "Code": "ipid",
             "Type": "static",
-            "Link": "https://api.paymentshield.co.uk/Document/ipid/633360.pdf"
+            "Link": "https://apiuat.paymentshield.co.uk/Document/ipid/633360.pdf"
         },
         {
             "QuoteRequestId": 633360,
@@ -56,7 +56,7 @@ Returns a list of documents for the given `QuoteRequestId` or `QuoteId`
                 "BuildingsAD": "Excluded",
                 "ContentsAD": "Excluded"
             },
-            "Link": "https://api.paymentshield.co.uk/Document/multiquote/633360.pdf?adb=excluded&adc=excluded&bcl=500000&ccl=50000"
+            "Link": "https://apiuat.paymentshield.co.uk/Document/multiquote/633360.pdf?adb=excluded&adc=excluded&bcl=500000&ccl=50000"
         },
 		...
         {
@@ -70,7 +70,7 @@ Returns a list of documents for the given `QuoteRequestId` or `QuoteId`
                 "BuildingsAD": "Included",
                 "ContentsAD": "Included"
             },
-            "Link": "https://api.paymentshield.co.uk/Document/multiquote/633360.pdf?adb=included&adc=included&bcl=1000000&ccl=75000"
+            "Link": "https://apiuat.paymentshield.co.uk/Document/multiquote/633360.pdf?adb=included&adc=included&bcl=1000000&ccl=75000"
         },
         {
             "QuoteId": "37b322f5-8240-48a5-b362-000bddb544b3",
@@ -78,7 +78,7 @@ Returns a list of documents for the given `QuoteRequestId` or `QuoteId`
             "Name": "Quote and Application Summary",
             "Code": "qas",
             "Type": "dynamic",
-            "Link": "https://api.paymentshield.co.uk/Document/qas/37b322f5-8240-48a5-b362-000bddb544b3.pdf"
+            "Link": "https://apiuat.paymentshield.co.uk/Document/qas/37b322f5-8240-48a5-b362-000bddb544b3.pdf"
         },
         {
             "QuoteId": "37b322f5-8240-48a5-b362-000bddb544b3",
@@ -86,7 +86,7 @@ Returns a list of documents for the given `QuoteRequestId` or `QuoteId`
             "Name": "Statement of Demands and Needs",
             "Code": "sdn",
             "Type": "dynamic",
-            "Link": "https://api.paymentshield.co.uk/Document/sdn/37b322f5-8240-48a5-b362-000bddb544b3.pdf"
+            "Link": "https://apiuat.paymentshield.co.uk/Document/sdn/37b322f5-8240-48a5-b362-000bddb544b3.pdf"
         },
         {
             "QuoteId": "37b322f5-8240-48a5-b362-000bddb544b3",
@@ -97,7 +97,7 @@ Returns a list of documents for the given `QuoteRequestId` or `QuoteId`
             "Criteria": {
                 "PaymentFrequency": "monthly"
             },
-            "Link": "https://api.paymentshield.co.uk/Document/quote/monthly/37b322f5-8240-48a5-b362-000bddb544b3.pdf"
+            "Link": "https://apiuat.paymentshield.co.uk/Document/quote/monthly/37b322f5-8240-48a5-b362-000bddb544b3.pdf"
         },
         {
             "QuoteId": "37b322f5-8240-48a5-b362-000bddb544b3",
@@ -108,7 +108,7 @@ Returns a list of documents for the given `QuoteRequestId` or `QuoteId`
             "Criteria": {
                 "PaymentFrequency": "annual"
             },
-            "Link": "https://api.paymentshield.co.uk/Document/quote/annual/37b322f5-8240-48a5-b362-000bddb544b3.pdf"
+            "Link": "https://apiuat.paymentshield.co.uk/Document/quote/annual/37b322f5-8240-48a5-b362-000bddb544b3.pdf"
         },
 		...
         {
@@ -120,7 +120,7 @@ Returns a list of documents for the given `QuoteRequestId` or `QuoteId`
             "Criteria": {
                 "PaymentFrequency": "annual"
             },
-            "Link": "https://api.paymentshield.co.uk/Document/quote/annual/b6cfed8a-b9ce-4035-98a8-f5d0da449c3e.pdf"
+            "Link": "https://apiuat.paymentshield.co.uk/Document/quote/annual/b6cfed8a-b9ce-4035-98a8-f5d0da449c3e.pdf"
         }
     ]
 }
@@ -175,7 +175,7 @@ SDN        | One, after applying for a quote                         | One, afte
 Your primary way to discover Get Document links is to follow those returned in a Documents list response.
 
 ```http
-GET https://api.paymentshield.co.uk/Document/quote/monthly/37b322f5-8240-48a5-b362-000bddb544b3.pdf HTTP/1.1
+GET https://apiuat.paymentshield.co.uk/Document/quote/monthly/37b322f5-8240-48a5-b362-000bddb544b3.pdf HTTP/1.1
 UserId: 123456
 Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
 SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
@@ -185,13 +185,10 @@ You can use the `Link` returned for each document to retrieve the document as pd
 You can also construct a Get Document request string if the Quote Request or QuoteId is known and you know which document you want to retrieve:
 
 
-Document     | Request string
--------- | ----------------------------
-IPID       | https://api.paymentshield.co.uk/Document/ipid/{QuoteRequestId}
-Terms      | https://api.paymentshield.co.uk/Document/terms/{QuoteRequestId}
-Quote      | https://api.paymentshield.co.uk/Document/quote/{PaymentFrequency}/{QuoteId}
-QAS        | https://api.paymentshield.co.uk/Document/qas/{QuoteId}
-SDN        | https://api.paymentshield.co.uk/Document/sdn/{QuoteId}
-
-
-
+Document  | Request string
+--------- | ----------------------------
+IPID      | https://apiuat.paymentshield.co.uk/Document/ipid/{QuoteRequestId}
+Terms     | https://apiuat.paymentshield.co.uk/Document/terms/{QuoteRequestId}
+Quote     | https://apiuat.paymentshield.co.uk/Document/quote/{PaymentFrequency}/{QuoteId}
+QAS       | https://apiuat.paymentshield.co.uk/Document/qas/{QuoteId}
+SDN       | https://apiuat.paymentshield.co.uk/Document/sdn/{QuoteId}

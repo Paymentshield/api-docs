@@ -8,7 +8,7 @@ You can use the Catalogue Service to retrieve industry and occupation lists.  Yo
 > Example industry request without filter
 
 ```http
-GET http://api.paymentshield.co.uk/industries HTTP/1.1
+GET http://apiuat.paymentshield.co.uk/industries HTTP/1.1
 UserId: 123456
 Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
 SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
@@ -17,7 +17,7 @@ SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
 > Example industry request with filter
 
 ```http
-GET http://api.paymentshield.co.uk/industries/get?filter=fish HTTP/1.1
+GET http://apiuat.paymentshield.co.uk/industries/get?filter=fish HTTP/1.1
 UserId: 123456
 Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
 SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
@@ -37,7 +37,7 @@ Please see the code pane for example requests.  Note that in the second request 
 > Example occupations request without filter
 
 ```http
-GET http://api.paymentshield.co.uk/occupations HTTP/1.1
+GET http://apiuat.paymentshield.co.uk/occupations HTTP/1.1
 UserId: 123456
 Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
 SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
@@ -46,7 +46,7 @@ SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
 > Example Occupations request with filter
 
 ```http
-GET http://api.paymentshield.co.uk/occupations/get?filter=carpet HTTP/1.1
+GET http://apiuat.paymentshield.co.uk/occupations/get?filter=carpet HTTP/1.1
 UserId: 123456
 Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
 SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
@@ -68,7 +68,7 @@ You can use the Get Products request to return a list of valid Branch Numbers an
 > Example Products request
 
 ```http
-GET http://api.paymentshield.co.uk/products HTTP/1.1
+GET http://apiuat.paymentshield.co.uk/products HTTP/1.1
 UserId: 123456
 Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
 SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8

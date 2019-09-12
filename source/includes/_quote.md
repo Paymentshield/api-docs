@@ -12,15 +12,68 @@ A **QuoteRequest** is a well-defined request for cover which we submit to one or
 
 ## Create Quote
 
+> POST to the `/Quote` endpoint to create a quote.
+
+```php
+<?php
+
+// Use the token from your login response
+$userId = 123456;
+$token = '9c92d88f-d28f-4eb6-8e69-f96707113544'; 
+$systemId = '56cba828-1376-4ced-96d4-11a950e4afe8';
+
+$data = [
+	'ProductId' => 1010,
+	'BranchNumber' => 'PS180092',
+	'UseDefaults': true,
+	'IsIndicativeQuote': false,
+	'HasAssumedAnswers': false,
+	'CommissionSacrifice': 0,
+	'Answers': [
+		['InterfaceKey' => 'Applicant1Title', 'Value' => 'Mr'],
+		['InterfaceKey' => 'Applicant1Forename', 'Value' => 'Jess'],
+		...
+	]
+];
+
+$url  = 'https://apiuat.paymentshield.co.uk/Quote';
+$json = json_encode($data);
+$curl = curl_init();
+
+curl_setopt_array($curl, [
+  CURLOPT_URL => $url,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => $json,
+  CURLOPT_HTTPHEADER => [
+	"Content-Type: application/json",
+	"UserId: $userId",
+	"Token: $token",
+	"SystemId: $systemId",
+  ]
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+$response = $err
+	? "cURL Error $err"
+	: $response;
+```
+
 ```http
-POST https://api.paymentshield.co.uk/Quote/ HTTP/1.1
+POST https://apiuat.paymentshield.co.uk/Quote/ HTTP/1.1
 Content-Type: application/json
 UserId: 123456
 Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
 SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
-```
 
-```json
 {
   "ProductId": 1008,
   "BranchNumber": "AB000000",
@@ -63,7 +116,9 @@ Please see the code pane for an example of the HTTP headers and JSON request you
 
 ### ProductId
 
-Not all integrators can sell the full range of products. If you want to be authorised to sell a different range of products, please [Get in touch][contact]
+Not all integrators can sell the full range of products. If you want to be authorised to sell a different range of products, please [Get in touch][contact]. 
+
+The links in the table below will take you to our Question Set Explorer tool which will give you details of each question.
 
 ProductId | Product
 --------- | -------
@@ -345,8 +400,8 @@ Field | Details
 **QuoteStatus**                | Reflects the state of the quote in the Paymentshield system.  A new quote will have a status of 'QUOTESRETRIEVED'
 **ProductId**                  | Confirmation of the ProductId sent on the quote request.
 **QuoteSessionId**             | A reference unique to a series of linked quotes.
-**QuoteSessionContinuationUri**| A continuation url that can be used to transfer the user to the Paymentshield quote and apply journey to continue the session.
-**QuoteRequestContinuationUri**| A continuation url that can be used to transfer the user to the Paymentshield quote and apply journey to continue the quote request.
+**QuoteSessionContinuationUri**| A continuation URI that can be used to transfer the user to the Paymentshield quote and apply journey to continue the session.
+**QuoteRequestContinuationUri**| A continuation URI that can be used to transfer the user to the Paymentshield quote and apply journey to continue the quote request.
 **QuoteDate**                  | Confirmation of the date and time the quote was created in our system.
 **QuoteExpiryDate**            | The received quote can be applied for up to the Quote Expiry Date.
 **IsMultiTier**                | A flag set in our back end system that determines the number of alternative quotes that we will return in the quote response.
@@ -378,17 +433,17 @@ Field | Details
 **ID**| Each **ID** in the **Prices** node will be referenced by a **PriceId** in the **Quotes** node. These IDs are ephemeral and will not be the same between two responses, even if the Price data is the same.
 **Values**| The breakdown of values returned will be specific to the productId requested.
 
-### Continuation Uri
+### Continuation URI
 
 For 'Partial Integrators', who wish to create a quote but transfer the user to our web journey to complete the quote and apply journey, we provide ContinuationUris in the Quotes response. 
-As long as the User has activated their Adviser Hub account the Uri provides a silent logon to our quote and apply application.
+As long as the User has activated their Adviser Hub account the URI provides a silent logon to our quote and apply application.
 You may encounter three types of ContinuationUris as per the table below:
 
-Uri type | Details
+URI type | Details
 --------- | -------
-QuoteSessionContinuationUri | This is returned in a successful Post and Get Quote response.  The Uri can be used to transfer the user to latest stage they were at in the quote journey.  If multiple linked quotes exist the `QuoteSessionContinuationUri` will transfer the user to the latest quote created.
+QuoteSessionContinuationUri | This is returned in a successful Post and Get Quote response.  The URI can be used to transfer the user to latest stage they were at in the quote journey.  If multiple linked quotes exist the `QuoteSessionContinuationUri` will transfer the user to the latest quote created.
 QuoteRequestContinuationUri | This is returned in a successful Post Quote response and in a Get Quote response providing neither the quote request nor any of its linked quotes have been applied for.  The `QuoteRequestContinuationUri` will transfer the user to the latest point in the quote sent in the request.
-QuickQuoteContinuationUri   | This is returned in a successful Post QuickQuote response.  The Uri can be used to transfer the user to our web based quote and apply journey to confirm assumptions and continue to generate a full quote.
+QuickQuoteContinuationUri   | This is returned in a successful Post QuickQuote response.  The URI can be used to transfer the user to our web based quote and apply journey to confirm assumptions and continue to generate a full quote.
 
 ## Create Partial Quote
 
@@ -453,14 +508,12 @@ If you send a Quotes request with <code>IsPartialQuote</code> set to <code>true<
  > Create a QuickQuote
  
 ```http
-POST https://api.paymentshield.co.uk/QuickQuote/ HTTP/1.1
+POST https://apiuat.paymentshield.co.uk/QuickQuote/ HTTP/1.1
 Content-Type: application/json
 UserId: 123456
 Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
 SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
-```
 
-```json
 {
   "ProductId": 1008,
   "BranchNumber": "AB000000",
@@ -549,7 +602,7 @@ We deliver a `QuickQuotesResponse` in response to both the 'Create' and 'Get' Qu
  > Retrieve a set of Quotes by QuoteRequestId
  
 ```http
-GET https://api.paymentshield.co.uk/Quote/{QuoteRequestId} HTTP/1.1
+GET https://apiuat.paymentshield.co.uk/Quote/{QuoteRequestId} HTTP/1.1
 UserId: 123456
 Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
 SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
@@ -582,14 +635,14 @@ Pass the integer `QuoteRequestId` from the original Quote Response.
     "LinkedQuotes": [
         {
             "QuoteRequestId": 640112,
-            "Link": "http://api.paymentshield.co.uk/Quote/640112",
+            "Link": "http://apiuat.paymentshield.co.uk/Quote/640112",
             "QuoteStatus": "QUOTESRETRIEVED",
             "QuoteDate": "2019-08-01T10:44:06.8",
             "IsApplied": false
         },
         {
             "QuoteRequestId": 640113,
-            "Link": "http://api.paymentshield.co.uk/Quote/640113",
+            "Link": "http://apiuat.paymentshield.co.uk/Quote/640113",
             "QuoteStatus": "SUBMITTED",
             "QuoteDate": "2019-08-01T10:55:20.813",
             "IsApplied": true
@@ -625,7 +678,7 @@ UNABLETOQUOTE   | The Quote Request has been submitted for pricing but we have b
 > Retrieve a QuickQuote the same way you retrieve a Quote
 
 ```http
-GET https://api.paymentshield.co.uk/Quote/{QuoteRequestId} HTTP/1.1
+GET https://apiuat.paymentshield.co.uk/Quote/{QuoteRequestId} HTTP/1.1
 UserId: 123456
 Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
 SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
@@ -634,6 +687,78 @@ SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
 You can retrieve a QuickQuote the same way you would [Retrieve a quote](#retrieve-quote), passing the integer `QuoteRequestId` from the original QuickQuote Response.
 
 If the user has progressed a QuickQuote by adding information, so that it now has many prices, then we return a full `QuotesResponse`.
+
+
+## Apply
+
+```http
+POST https://apiuat.paymentshield.co.uk/Quote/{QuoteId}/Apply HTTP/1.1
+Content-Type: application/json
+UserId: 123456
+Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
+SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
+
+{
+  "UseDefaults": true,
+  "CommissionSacrifice": 0.0,
+  "Answers": [
+    {
+      "Value": "01/10/2019",
+      "InterfaceKey": "PolicyStartDate"
+    },
+    {
+      "Value": "01704555444",
+      "InterfaceKey": "Applicant1TelNo"
+    },
+    {
+      "Value": "Online",
+      "InterfaceKey": "DocumentDeliveryPreference"
+    },
+    {
+      "Value": "applicant@example.com",
+      "InterfaceKey": "Applicant1EmailAddress"
+    },
+    {
+      "Value": "Advised",
+      "InterfaceKey": "BasisOfAdvice"
+    },
+    {
+      "Value": "TCTest01",
+      "InterfaceKey": "YourRef"
+    },
+    {
+      "Value": "DirectDebit",
+      "InterfaceKey": "PaymentMethod"
+    },
+    {
+      "Value": "Annual",
+      "InterfaceKey": "PaymentFrequency"
+    },
+    {
+      "Value": "Mr T Tester",
+      "InterfaceKey": "BankAccountName"
+    },
+    {
+      "Value": "101010",
+      "InterfaceKey": "BankSortCode"
+    },
+    {
+      "Value": "12345678",
+      "InterfaceKey": "BankAccountNo"
+    },
+    {
+      "Value": "First",
+      "InterfaceKey": "DirectDebitDate"
+    }
+  ]
+}
+```
+
+You can apply for an existing Quote by POSTing to the `Apply` action on the quote resource, passing answers for the 'Application Stage' questions.
+
+For example, to apply for the quote with QuoteId `cbf8196c-7757-49a9-8511-c5abf6b4b1c6`, the endpoint is `/Quote/cbf8196c-7757-49a9-8511-c5abf6b4b1c6/Apply`.
+
+You can find the list and descriptions of the 'Application Stage' questions in the Question Set Explorer tool, which you can find from the [ProductId](#product-id) table earlier in this document.
 
 
 [contact]: https://paymentshield.co.uk
