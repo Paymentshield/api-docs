@@ -758,7 +758,13 @@ You can apply for an existing Quote by POSTing to the `Apply` action on the quot
 
 For example, to apply for the quote with QuoteId `cbf8196c-7757-49a9-8511-c5abf6b4b1c6`, the endpoint is `/Quote/cbf8196c-7757-49a9-8511-c5abf6b4b1c6/Apply`.
 
-You can find the list and descriptions of the 'Application Stage' questions in the Question Set Explorer tool, which you can find from the [ProductId](#product-id) table earlier in this document.
+You can find the list and descriptions of the 'Application Stage' questions in the Question Set Explorer tool, which you can find from the [ProductId](#productid) table earlier in this document.
+
+### Apply Response
+
+The Apply Response resembles the [Quote Response](#quote-response), with many of the same fields.
+
+On successful application, the `QuoteStatus` will be `SUBMITTED`. If the request fails, the status will stay at `QUOTESRETRIEVED`.
 
 
 [contact]: https://paymentshield.co.uk
