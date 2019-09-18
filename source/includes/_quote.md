@@ -27,7 +27,6 @@ $data = [
 	'BranchNumber' => 'PS180092',
 	'UseDefaults': true,
 	'IsIndicativeQuote': false,
-	'HasAssumedAnswers': false,
 	'CommissionSacrifice': 0,
 	'Answers': [
 		['InterfaceKey' => 'Applicant1Title', 'Value' => 'Miss'],
@@ -79,7 +78,6 @@ SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
   "BranchNumber": "AB000000",
   "UseDefaults": true,
   "IsIndicativeQuote": false,
-  "HasAssumedAnswers": false,
   "CommissionSacrifice": 0,
   "Answers": [
     {
@@ -137,7 +135,6 @@ Field | Details
 **BranchNumber**             | The `BranchNumber` is provided as part of a user's configuration in our back end system.  To create a Quote Request a user must be authorised to sell the product under the branch number you send in the request.  
 **UseDefaults**              | We recommend that `UseDefaults` is set to true. It sets some Answers, including calculated Answers (total coverage value for STIP/MPPI), to their sensible default or calculated value if you don't specify one.
 **IsIndicativeQuote**        | We recommend that `IsIndicativeQuote` is set to false.  If this is set to true the resulting quotes cannot be applied for.
-**HasAssumedAnswers**        | `HasAssumedAnswers` should be set to false.  This field is not currently used.
 **CommissionSacrifice**      | The maximum amount of commission that can be sacrificed by a user is provided as part of a user's configuration in our back end system.  The value sent in the `CommissionSacrifice` field must not exceed the maximum for the user/branch number combination.
 **Answers**                  |You should include the **InterfaceKey/Values** required for the specified product in the `Answers` array.  Each product has a certain number of mandatory answers that must be provided to get a quote.  
 
@@ -155,7 +152,6 @@ To find out what values you should send in the <code>Answers</code> array, you c
   "BranchNumber": "AB000000",
   "UseDefaults": true,
   "IsIndicativeQuote": false,
-  "HasAssumedAnswers": false,
   "CommissionSacrifice": 0,
   "Answers": [
     ...
@@ -455,7 +451,6 @@ QuickQuoteContinuationUri   | This is returned in a successful Post QuickQuote r
   "BranchNumber": "AB000000",
   "UseDefaults": true,
   "IsIndicativeQuote": false,
-  "HasAssumedAnswers": false,
   "CommissionSacrifice": 0,
   "IsPartialQuote": true,
   "Answers": [
@@ -519,7 +514,6 @@ SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
   "BranchNumber": "AB000000",
   "UseDefaults": true,
   "IsIndicativeQuote": false,
-  "HasAssumedAnswers": false,
   "CommissionSacrifice": 0.0,
   "Answers": [
     {
@@ -595,7 +589,7 @@ We deliver a `QuickQuotesResponse` in response to both the 'Create' and 'Get' Qu
 
  + It has a `QuickQuoteContinuationUri` instead of `QuoteSessionContinuationUri`
  + Only the cheapest Price is returned, instead of many prices
- + We confirm the source of each `Value` in the `Answers` array using a `Source` field which will either return as 'User' if supplied in the request or 'assumed' if the value has been assumed.
+ + We confirm the source of each `Value` in the `Answers` array using a `Source` field which will either return as 'User' if supplied in the request or 'Assumed' if the value has been assumed.
 
 ## Retrieve Quote
 
