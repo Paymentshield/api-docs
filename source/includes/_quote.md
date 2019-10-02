@@ -205,12 +205,16 @@ In this case you must send all three answers for the specified item to be added 
 We use RepeatingQuestionSetIndex to link the three answers.  
 Each set of multi-part answers in the answers array must have a unique value for RepeatingQuestionSetIndex.
 
+The numbering of **RepeatingQuestionSetIndex** in the response always starts at **0**, even if the request started at 1.
+
+The response does not return the multi-part answers as a group but mixes them all together in the Answers array. This is expected behaviour.
+
 The example in the code pane shows how to add two specified items to a quote - in this case a PC and a Watch.
 
 ## Quote Response
 
  > Example Quote Response
- 
+
 ```json
 {
     "StatusCode": "OK",
