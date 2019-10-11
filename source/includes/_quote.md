@@ -194,20 +194,41 @@ To find out what values you should send in the <code>Answers</code> array, you c
 }
 ```
 
-Some of our products have questions that allow repeating answers and have multiple parts to the answer.  
-An example of this is ContentsItemsToSpecify which has three parts:
+Some of our products have questions that allow repeating answers and have multiple parts to the answer. An example of this is `ContentsItemsToSpecify`, which, when set to true, requires at least one group of the following answers:
 
-* SpecifiedItemType
-* SpecifiedItemDescription
-* SpecifiedItemValue
+RepeatingQuestionSetIndex  | InterfaceKey
+-------------------------  | ----------------
+0                          | SpecifiedItemType
+0                          | SpecifiedItemDescription
+0                          | SpecifiedItemValue
 
-In this case you must send all three answers for the specified item to be added to the quote.
-We use RepeatingQuestionSetIndex to link the three answers.  
-Each set of multi-part answers in the answers array must have a unique value for RepeatingQuestionSetIndex.
+You must send all three answers for the specified item to be added to the quote.
 
-The numbering of **RepeatingQuestionSetIndex** in the response always starts at **0**, even if the request started at 1.
+To add a second specified item, you would include another group of answers to these three questions, marked with an incremented **RepeatingQuestionSetIndex** of 1.
 
-The response does not return the multi-part answers as a group but mixes them all together in the Answers array. This is expected behaviour.
+Each set of multi-part answers, whether for specified items, personal possessions, or previous claims, must have a globally unique integer value for **RepeatingQuestionSetIndex**. For example, you should not use 0 to mark both a Personal Possession and a Previous Claim; they should have different indices:
+
+RepeatingQuestionSetIndex  | InterfaceKey         | Value
+-------------------------  | -------------------- | -----------------------
+0                          | PPItemType           | JewelleryOrWatches
+0                          | PPItemDescription    | Swiss watch
+0                          | PPItemValue          | 3500
+1                          | PreviousClaimClaimedUnder | BuildingsOnly
+1                          | PreviousClaimTypeOfLoss   | AccidentalDamage
+1                          | PreviousClaimDateOfLoss   | 20/08/2015
+
+### Strategies for unique RepeatingQuestionSetIndex
+
+Here are two strategies for setting correct values for `RepeatingQuestionSetIndex` in your integration:
+
+ 1. You could keep a global count of repeating sections in your state store and apply it to the corresponding Answer nodes in your request
+ 2. You could assume a maximum for each repeating group and treat it as an offset, so that all SpecifiedItems begin at 0, PersonalPossessions begin at 10, and PreviousClaims begin at 20, for example.
+
+The numbering of `RepeatingQuestionSetIndex` in our **response** will always start at **0**, even if your request started at 1 (or higher). Our numbering in the response will be **contiguous** (i.e. no gaps in numbering starting from 0) even if your request had gaps. 
+
+<aside class="warning">
+You must not depend on the answer responses having the same indices with which you submitted them. Always treat the Answers array as a random access array and look up or iterate over the items according to the concrete information present in the Answers array.
+</aside>
 
 The example in the code pane shows how to add two specified items to a quote - in this case a PC and a Watch.
 

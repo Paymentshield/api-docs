@@ -2,6 +2,8 @@
 
 You can use the Document Service to get a list of the Documents available for a customer's Quote (or QuoteRequest), and to retrieve the individual documents themselves. Documents are always PDFs but you can choose to receive them as either a Base64 stream or raw PDF bytes (with an `application/pdf` content-type).
 
+Use `GET` when requesting lists and documents from the Document Service.
+
 ## Get Documents List
 
  > Get a list of Documents by QuoteRequestId
@@ -16,7 +18,7 @@ SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
  > Get a list of Documents by QuoteId
  
 ```http
-GET https://apiuat.paymentshield.co.uk/Documents/{QuoteId:GUID} HTTP/1.1
+GET https://apiuat.paymentshield.co.uk/Documents/?quoteId={QuoteId:GUID} HTTP/1.1
 UserId: 123456
 Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
 SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
@@ -126,6 +128,10 @@ Returns a list of documents for the given `QuoteRequestId` or `QuoteId`
 }
 ```
 
+To get the documents list by QuoteRequestId, make a GET request to `/Documents/{QuoteRequestId}`, like `/Documents/4812345`. 
+
+A quote request has many quotes. To get the documents for an individual quote, make a GET request to `/Documents/?quoteId={QuoteId}` where the `QuoteId` is the long GUID of a quote, like `/Documents/?quoteId=ebff7102-0fb7-4856-b8ae-caf208834bdf`
+
 ### Response fields
 
 Like all other response types from our API, there will be `StatusCode` and `Messages` array at the top of the response.
@@ -180,6 +186,7 @@ UserId: 123456
 Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
 SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
 ```
+
 You can use the `Link` returned for each document to retrieve the document as pdf.  You can request the document as a base64 string by removing **.pdf** from the Link.
 
 You can also construct a Get Document request string if the Quote Request or QuoteId is known and you know which document you want to retrieve:
