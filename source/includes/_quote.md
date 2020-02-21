@@ -540,6 +540,7 @@ SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
   "UseDefaults": true,
   "IsIndicativeQuote": false,
   "CommissionSacrifice": 0.0,
+  "UseThirdPartyData": false,
   "Answers": [
     {
       "Value": "Mr",
@@ -608,13 +609,44 @@ We add assumptions for all other mandatory questions in order to return a price 
 
 Please see the code pane for an example of QuickQuote request message.
 
+### Third Party Property Data
+ 
+If you send the `UseThirdPartyData` parameter with a value of `true` in a POST QuickQuote request, you can omit the following three fields from the QuickQuote request:
+
+ * PropertyType
+ * NumberOfBedrooms
+ * BuildYear
+
+We will use the address details sent in the request to call a third party data provider to source the property details which will then be added to the request.
+
+If omitted, the `UseThirdPartyData` value defaults to `false`.
+
+
 ### QuickQuotesResponse
 
 We deliver a `QuickQuotesResponse` in response to both the 'Create' and 'Get' QuickQuote operations. This object has some differences from a normal QuotesResponse:
 
  + It has a `QuickQuoteContinuationUri` instead of `QuoteSessionContinuationUri`
  + Only the cheapest Price is returned, instead of many prices
- + We confirm the source of each `Value` in the `Answers` array using a `Source` field which will either return as 'User' if supplied in the request or 'Assumed' if the value has been assumed.
+ + We confirm the source of each `Value` in the `Answers` array using a `Source` field which will either return as 'User' if supplied in the request, 'ThirdParty' if the value has been sourced from an external data provider or 'Assumed' if the value has been assumed.
+ 
+ > Error returned when unable to source ThirdPartyData
+ 
+~~~json
+{
+    "StatusCode": "NoDataWarning",
+    "Messages": [
+        {
+            "MessageType": "Error",
+            "Summary": "Sorry, we couldn't find any information for that property"
+        }
+    ]
+}
+~~~
+
+If you send the `UseThirdPartyData` parameter with a value of `true` and we are unable to source the property data we will return an `error` response as per the example provided.
+
+
 
 ## Retrieve Quote
 
