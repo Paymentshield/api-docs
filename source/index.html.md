@@ -31,10 +31,6 @@ Our APIs to date are:
  * Catalogue Service
 
 
-# Register to use the API
-
-To integrate with us and start exploring and selling PSL policies, please visit our [Developer portal][developerportal] and complete the signup form to receive your `SystemId` and Test User credentials.
-
 # Environments
 
 The code samples on this page use the UAT environment, which you should use for integration.

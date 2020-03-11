@@ -121,9 +121,9 @@ The links in the table below will take you to our Question Set Explorer tool whi
 ProductId | Product
 --------- | -------
 [1008][Questionset68]      | Home - Buildings and Contents
-[1009][Questionset111]     | Landlords - Buildings and Contents
+[1009][Questionset114]     | Landlords - Buildings and Contents
 [1010][Questionset80]      | Tenants Liability
-[1011][Questionset87]      | Rent Protection
+[1011][Questionset88]      | Rent Protection
 [1003][Questionset48]      | Mortgage Protection
 [1004][Questionset99]      | Income Protection
 [1013][Questionset107]     | Tenants Contents 
@@ -821,9 +821,9 @@ On successful application, the `QuoteStatus` will be `SUBMITTED`. If the request
 [contact]: https://paymentshield.co.uk
 [developerportal]: https://paymentshield.co.uk
 [Questionset68]:https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/68
-[Questionset111]:https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/111
+[Questionset114]:https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/114
 [Questionset80]:https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/80
-[Questionset87]:https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/87
+[Questionset88]:https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/88
 [Questionset48]:https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/48
 [Questionset99]:https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/99  
 [Questionset107]:https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/107
