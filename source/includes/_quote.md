@@ -237,12 +237,12 @@ The example in the code pane shows how to add two specified items to a quote - i
 
 ### User Reference
 
-You can pass an optional UserReference field in a quote request to allow you to identify the quote as per your own requirements.  For exaple, a customer or fact find reference from your system.
+You can pass an optional UserReference field in a quote request to allow you to identify the quote as per your own requirements.  For example, a customer or fact find reference from your system.
 
-The UserReference will be returned in the Quote Response and can be used to search for quotes using a [GET Quotes](#<Search Quotes>) request specifying the UserReference.
+The UserReference will be returned in the Quote Response and can be used to search for quotes using a [GET Quotes](#search-quotes) request specifying the UserReference.
 
 <aside class="notice">
-If you use <code>Edit Quote</code> to create a variant of a quote request linked to the original, by default any <code>UserReference</code> attached to the original quote will be copied to the <code>Linked Quote</code>.  You may override this by setting <code>UserReference</code> explicitly on the new linked quote.
+If you use <code>Edit Quote</code> to create a variant of a quote request linked to the original, by default any <code>UserReference</code> attached to the original quote will be copied to the <b>Linked Quote</b>.  You may override this by setting <code>UserReference</code> explicitly on the new linked quote.
 </aside>
 
 ## Quote Response
@@ -684,7 +684,7 @@ You can create a new version of a quote linked to an existing QuoteRequestId by 
 
 For example, to create a new QuoteRequestId that is linked to the existing QuoteRequestId `645678`, the endpoint is `/Quote/645678`.
 
-Use the edit function to create variants of a quote for a single customer.  As the quotes are [Linked](#<Linked Quotes>) it is only possible to apply for one of them.  This removes the chance of inadvertently creating multiple policies for a single customer.
+Use the edit function to create variants of a quote for a single customer.  As the quotes are [Linked](#linked-quotes) it is only possible to apply for one of them.  This removes the chance of inadvertently creating multiple policies for a single customer.
 
 The edit function creates a totally new `QuoteRequestId` so the request should include all required information and not just the answers that have been changed from the original.   
 
@@ -752,7 +752,7 @@ Pass the integer `QuoteRequestId` from the original Quote Response.
 There are two ways to create linked quotes:
 
 1. When your user transfers to our quote and apply journey (using one of the above continuation uris), it is possible for them to use features on our website to create variations of the quote.  
-2. Using the [Edit Quote](#<Edit Quote>) function to create a new variant of a quote linked to another QuoteRequestId.
+2. Using the [Edit Quote](#edit-quote) function to create a new variant of a quote linked to another QuoteRequestId.
 
 In both of the above cases, each quote variant is given its own unique **Quote Request Id**.  We will return details of all linked quotes when you next perform a Get Quote request.  
 

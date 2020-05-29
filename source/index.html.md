@@ -109,7 +109,7 @@ Mandatory      | Problem with an Answer which is mandatory and for which you did
 Invalid        | Problem with an Answer with validation criteria which weren't met
 Quote          | Problem with quote retrieval or insurability of the submitted data
 Error          | Problem with our service or a third party service dependency
-ResultsLimited | Warning that there were too many results to show (for [Search Quotes](#<Search Quotes>))
+ResultsLimited | Warning that there were too many results to show (for [Search Quotes](#search-quotes))
 Generic        | Fallback error designation
 
 
