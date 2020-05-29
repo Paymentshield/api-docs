@@ -28,6 +28,7 @@ $data = [
 	'UseDefaults': true,
 	'IsIndicativeQuote': false,
 	'CommissionSacrifice': 0,
+	'UserReference' => 'MyRef_123',
 	'Answers': [
 		['InterfaceKey' => 'Applicant1Title', 'Value' => 'Miss'],
 		['InterfaceKey' => 'Applicant1Forename', 'Value' => 'Jessica'],
@@ -79,6 +80,7 @@ SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
   "UseDefaults": true,
   "IsIndicativeQuote": false,
   "CommissionSacrifice": 0,
+  "UserReference": "MyRef_123",
   "Answers": [
     {
       "Value": "Mrs",
@@ -136,6 +138,7 @@ Field | Details
 **UseDefaults**              | We recommend that `UseDefaults` is set to true. It sets some Answers, including calculated Answers (total coverage value for STIP/MPPI), to their sensible default or calculated value if you don't specify one.
 **IsIndicativeQuote**        | We recommend that `IsIndicativeQuote` is set to false.  If this is set to true the resulting quotes cannot be applied for.
 **CommissionSacrifice**      | The maximum amount of commission that can be sacrificed by a user is provided as part of a user's configuration in our back end system.  The value sent in the `CommissionSacrifice` field must not exceed the maximum for the user/branch number combination.
+**UserReference**      | An optional field that you can use to record your own cross reference against a quote. You can also use the `UserReference` to search for quotes.
 **Answers**                  |You should include the **InterfaceKey/Values** required for the specified product in the `Answers` array.  Each product has a certain number of mandatory answers that must be provided to get a quote.  
 
 <aside class="notice">
@@ -232,6 +235,16 @@ You must not depend on the answer responses having the same indices with which y
 
 The example in the code pane shows how to add two specified items to a quote - in this case a PC and a Watch.
 
+### User Reference
+
+You can pass an optional UserReference field in a quote request to allow you to identify the quote as per your own requirements.  For exaple, a customer or fact find reference from your system.
+
+The UserReference will be returned in the Quote Response and can be used to search for quotes using a [GET Quotes](#<Search Quotes>) request specifying the UserReference.
+
+<aside class="notice">
+If you use <code>Edit Quote</code> to create a variant of a quote request linked to the original, by default any <code>UserReference</code> attached to the original quote will be copied to the <code>Linked Quote</code>.  You may override this by setting <code>UserReference</code> explicitly on the new linked quote.
+</aside>
+
 ## Quote Response
 
  > Example Quote Response
@@ -252,6 +265,7 @@ The example in the code pane shows how to add two specified items to a quote - i
     "IsMultiTier": true,
     "IsIndicativeQuote": false,
     "CommissionSacrifice": 0,
+	"UserReference": "YourRef_123",
     "Quotes": [
         {
             "QuoteId": "4b3ccf9a-1df7-2d6c-3cd0-48f3bd8e1111",
@@ -428,6 +442,7 @@ Field | Details
 **IsMultiTier**                | A flag set in our back end system that determines the number of alternative quotes that we will return in the quote response.
 **IsIndicativeQuote**          | Confirmation of the value passed in the Quotes request message.
 **CommissionSacrifice**        | Confirmation of the value passed in the Quotes request message.
+**UserReference**              | Confirmation of the value passed in the Quotes request message.
 **Quotes array**                | Explained below
 **Prices array**                | Explained below
 **Answers array**               | We use the **Answers** array to replay the answers that were sent in the Quotes request message.
@@ -507,7 +522,7 @@ QuickQuoteContinuationUri   | This is returned in a successful Post QuickQuote r
 
 There are two main reasons that you might build your integration to submit ['partial' quote requests][partial]:
 
- 1. If you want to start a quote with a small amount of information, save it, and resume the journey later in our Adviser Hub web frontend.
+ 1. If you want to start a quote with a small amount of information, save it, and update it with more information when available or resume the journey later in our Adviser Hub web frontend.
  2. If you want to capture some information in your application, and transfer right away to our web frontend to complete the quote and buy journey.
  
 If you send the `IsPartialQuote` parameter with a value of `true` in a [POST Quote request][postquote], then we skip part of the validation logic, so that the request is not refused, but instead returns a response where the `QuoteStatus` is `INPROGRESS`.
@@ -517,11 +532,24 @@ If omitted, the `IsPartialQuote` value defaults to `false`.
 In the response, you will receive a `QuoteRequestId` and a `QuoteSessionContinuationUri` that you can use to transfer to our quote and apply journey to complete the remaining questions and obtain a full quote.  When you transfer to our journey the answers you provided will be pre-populated.
 
 <aside class="notice">
-If you send a Quotes request with <code>IsPartialQuote</code> set to <code>true</code>, but send answers to all mandatory questions, the <code>QuoteStatus</code> will be returned as <code>QUOTESRETRIEVED</code> and the QuoteSessionContinuationUri will take the user to the <b>Quotes Results page</b> where they can continue with the Quote journey.  We will not return prices in the response if the <code>IsPartialQuote</code> flag is used.
+If you send a Quotes request with <code>IsPartialQuote</code> set to <code>true</code>, but send answers to all mandatory questions, the <code>QuoteStatus</code> will still be returned as <code>INPROGRESS</code>.  This allows for subsequent addition of non-mandatory answers before requesting the full quote response.
 </aside>
 
 [partial]: #full-vs-partial-integration
 [postquote]: #create-quote
+
+### Update a Partial Quote
+
+You can send updates to a Partial Quote by POSTing to the `/Quote` endpoint specifying the QuoteRequestId to be updated.
+
+For example, to update the QuoteRequestId `641234`, the endpoint is `/Quote/641234`.
+
+You can use the update function to add more information to a QuoteRequest, or change answers previously sent.
+The update is not a differential; it will completely replace the existing answers for the QuoteRequest. If you exclude Answers from your update which were previously set, this will effectively remove them.  
+
+<aside class="notice">
+To update answers for an existing quote, it must be at status <code>INPROGRESS</code>.  If it is at status <code>QUOTESRETRIEVED</code> the request will be interpreted as an <code>Edit</code> resulting in a new Linked Quote.
+</aside>
 
 ## Create QuickQuote
 
@@ -609,6 +637,10 @@ We add assumptions for all other mandatory questions in order to return a price 
 
 Please see the code pane for an example of QuickQuote request message.
 
+### Flexible Quick Quote
+
+If you are integrating from another application and have more information available than the above list of minimum data requirements you can send additional fields.  The more information you are able to provide in the quick quote request the more accurate the quote response will be.  
+
 ### Third Party Property Data
  
 If you send the `UseThirdPartyData` parameter with a value of `true` in a POST QuickQuote request, you can omit the following three fields from the QuickQuote request:
@@ -646,6 +678,19 @@ We deliver a `QuickQuotesResponse` in response to both the 'Create' and 'Get' Qu
 
 If you send the `UseThirdPartyData` parameter with a value of `true` and we are unable to source the property data we will return an `error` response as per the example provided.
 
+## Edit Quote
+
+You can create a new version of a quote linked to an existing QuoteRequestId by POSTing to the `/Quote` endpoint specifying the QuoteRequestId to link the new quote to.  
+
+For example, to create a new QuoteRequestId that is linked to the existing QuoteRequestId `645678`, the endpoint is `/Quote/645678`.
+
+Use the edit function to create variants of a quote for a single customer.  As the quotes are [Linked](#<Linked Quotes>) it is only possible to apply for one of them.  This removes the chance of inadvertently creating multiple policies for a single customer.
+
+The edit function creates a totally new `QuoteRequestId` so the request should include all required information and not just the answers that have been changed from the original.   
+
+<aside class="notice">
+To create a new version of a quote using the edit function, the existing quote must be at status <code>QUOTESRETRIEVED</code>. 
+</aside>
 
 
 ## Retrieve Quote
@@ -704,8 +749,12 @@ Pass the integer `QuoteRequestId` from the original Quote Response.
 }
 ```
 
-When your user transfers to our quote and apply journey (using one of the above continuation uris), it is possible for them to use features on our website to create variations of the quote.  Each quote variant is given its own unique **Quote Request Id**.
-Where this has occurred we will return details of all linked quotes when you next perform a Get Quote request.  
+There are two ways to create linked quotes:
+
+1. When your user transfers to our quote and apply journey (using one of the above continuation uris), it is possible for them to use features on our website to create variations of the quote.  
+2. Using the [Edit Quote](#<Edit Quote>) function to create a new variant of a quote linked to another QuoteRequestId.
+
+In both of the above cases, each quote variant is given its own unique **Quote Request Id**.  We will return details of all linked quotes when you next perform a Get Quote request.  
 
 Please see the code pane for an example of this.  In the response shown the user has created three linked quotes and has applied for a quote within 640113.
 
@@ -738,6 +787,88 @@ SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
 You can retrieve a QuickQuote the same way you would [Retrieve a quote](#retrieve-quote), passing the integer `QuoteRequestId` from the original QuickQuote Response.
 
 If the user has progressed a QuickQuote by adding information, so that it now has many prices, then we return a full `QuotesResponse`.
+
+## Search Quotes
+
+> Search for Quotes by UserReference
+ 
+```http
+GET https://apiuat.paymentshield.co.uk/Quotes/?UserReference=YourRef_123 HTTP/1.1
+UserId: 123456
+Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
+SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
+```
+
+> Example of GET Quotes response
+
+```json
+
+{
+    "StatusCode": "OK",
+    "Messages": [
+        {
+            "MessageType": "ResultsLimited",
+            "Summary": "We've limited the number of results to 100"
+        }
+    ],
+    "Results": [
+        {
+            "QuoteRequestId": 634560,
+            "Link": "http://s-pstest-web002.paymentshield.co.uk:1993/Quote/634560",
+            "QuoteStatus": "SUBMITTED",
+            "QuoteDate": "2020-01-30T11:20:31.343",
+            "Applicant1Surname": "Matip",
+            "Applicant1DoB": "1970-05-01T00:00:00+01:00",
+            "Postcode": "PR9 0SL",
+            "ProductId": "1008",
+            "ApplicationRef": "PSL-INT-9005780"
+        },
+        {
+            "QuoteRequestId": 634562,
+            "Link": "http://s-pstest-web002.paymentshield.co.uk:1993/Quote/634562",
+            "QuoteStatus": "SUBMITTED",
+            "QuoteDate": "2020-01-30T11:20:59.373",
+            "Applicant1Surname": "Robertson",
+            "Applicant1DoB": "1989-05-01T00:00:00+01:00",
+            "Postcode": "PR8 3AE",
+            "ProductId": "1008",
+            "ApplicationRef": "PSL-INT-9005782"
+        },
+        {
+            "QuoteRequestId": 640753,
+            "Link": "http://s-pstest-web002.paymentshield.co.uk:1993/Quote/640753",
+            "QuoteStatus": "QUOTESRETRIEVED",
+            "QuoteDate": "2020-02-11T13:23:58.13",
+            "Applicant1Surname": "Becker",
+            "Applicant1DoB": "1986-05-01T00:00:00+01:00",
+            "Postcode": "PR9 0SL",
+            "ProductId": "1008",
+            "QuoteRequestContinuationUri": "http://test3.paymentshield-advisers.co.uk/QuoteRequests/LoginWithAccessToken?userId=336427&token=a9501932-5e32-4a12-be5a-589cd7e39d1c&redirectUri=%2FQuoteRequests%2FContinue%2F640753"
+        },
+		...
+	
+}
+```
+
+Use the `GET Quotes` (plural) endpoint to search for quotes based on different criteria. Pass the criteria in the querystring of the GET request (see example)
+
+### Supported Fields
+
+We are expanding this feature. It currently supports the following fields as search criteria:
+
+Field       | Definition
+----------- | -------
+UserReference   | Your reference attached to the quote using the `UserReference` field
+
+
+Use the `GET Quotes` endpoint specifying a UserReference to get a list of quotes with a matching UserReference value. You must provide the full reference, not a fragment or wildcard.
+
+We will return details of all quotes that have a UserReference matching the request.  In the example provided, all quotes with a UserReference of 'YourRef_123' will be returned in the response.  
+
+Please see the code pane for an example of the JSON response.  In the example used, the search has returned more than 100 results.  We will only return the first 100 results in the response.
+
+We return some key information about each QuoteRequest to help you to identify the quote required. 
+You can use the `Link` returned in the response to make a `GET Quote` request to retrieve the fully-hydrated quote response.
 
 
 ## Apply
