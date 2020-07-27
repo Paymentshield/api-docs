@@ -122,14 +122,23 @@ The links in the table below will take you to our Question Set Explorer tool whi
 
 ProductId | Product
 --------- | -------
-[1008][Questionset68]      | Home - Buildings and Contents
-[1009][Questionset114]     | Landlords - Buildings and Contents
-[1010][Questionset80]      | Tenants Liability
-[1011][Questionset88]      | Rent Protection
-[1003][Questionset48]      | Mortgage Protection
-[1004][Questionset99]      | Income Protection
-[1013][Questionset107]     | Tenants Contents 
+[1008][QuestionsetHome]   | Home - Buildings and Contents
+[1009][QuestionsetLL]     | Landlords - Buildings and Contents
+[1010][QuestionsetTL]     | Tenants Liability
+[1011][QuestionsetRP]     | Rent Protection
+[1003][QuestionsetMPPI]   | Mortgage Protection
+[1004][QuestionsetSTIP]   | Income Protection
+[1013][QuestionsetTC]     | Tenants Contents 
 
+[QuestionsetHome]: https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/68
+[QuestionsetLL]:   https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/127
+[QuestionsetTL]:   https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/80
+[QuestionsetRP]:   https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/89
+[QuestionsetMPPI]: https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/48
+[QuestionsetSTIP]: https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/99  
+[QuestionsetTC]:   https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/107
+ 
+ 
 ### Other fields in the create quote request
 
 Field | Details
@@ -951,14 +960,3 @@ On successful application, the `QuoteStatus` will be `SUBMITTED`. If the request
 
 [contact]: https://paymentshield.co.uk
 [developerportal]: https://paymentshield.co.uk
-[Questionset68]:https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/68
-[Questionset114]:https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/114
-[Questionset80]:https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/80
-[Questionset88]:https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/88
-[Questionset48]:https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/48
-[Questionset99]:https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/99  
-[Questionset107]:https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/107
- 
-
-
-
