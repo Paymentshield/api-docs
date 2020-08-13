@@ -25,12 +25,31 @@ Welcome to our API! We have built our new REST API with you in mind, to make it 
 
 Our API is composed of a number of services separated by function and hosted in isolation, but you can access them all through one easy URL scheme.
 
-Our APIs to date are:
+All API endpoints:
 
- * Security Service
- * Quote Service
- * Documents Service
- * Catalogue Service
+Service     | Method | URL | Description   |
+------------|--------|-----|---------------|
+[Security][sec]  | POST   | `/Security/Login`     | Login via email/password or userid/passkey and get a token
+[Security][sec]  | POST   | `/Security/Token`     | Keeps your session token alive without doing an operation
+[Quotes][quo]    | POST   | `/Quote`              | Create a quote
+[Quotes][quo]    | POST   | `/QuickQuote`         | Create a quick quote
+[Quotes][quo]    | GET    | `/Quote/654321`       | Retrieve quote by quote request ID
+[Quotes][quo]    | POST   | `/Quote/654321`       | Edit quote if un-priced, Clone quote if priced already
+[Quotes][quo]    | POST   | `/Quote/{guid}/Apply` | Apply for a quote, by quote reference (GUID)
+[Quotes][quo]    | GET    | `/Quotes/?params`     | Search for quotes. Supported params: UserReference
+[Documents][doc] | GET    | `/Documents/654321`   | Get list of document links for the quote request
+[Documents][doc] | GET    | `/Documents/?quoteId={guid}`       | Get list of document links for the quote reference (GUID)
+[Documents][doc] | GET    | `/Document/{type}/{freq}/{id}.pdf` | Get a document. Add {freq} for multi quote summary only. {id} is QRID for IPID and Terms, Quote Ref GUID for all others.
+[Documents][doc] | POST   | `/SDN/654321`         | Create an SDN for a submitted Advised quote
+[Catalogue][cat] | GET    | `/Industries`         | Get list of ABI industries
+[Catalogue][cat] | GET    | `/Occupations`        | Get list of ABI occupations
+[Catalogue][cat] | GET    | `/Products`           | Get products you can sell as the authenticated user, by branch
+[Catalogue][cat] | GET    | `/SdnTemplate/654321` | Get the SDN template sections and statements recommended for the quote request
+
+[sec]: /#authentication
+[quo]: /#quote-service
+[doc]: /#document-service
+[cat]: /#catalogue-service
 
 
 # Environments

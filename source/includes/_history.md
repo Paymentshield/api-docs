@@ -1,5 +1,12 @@
 # Version History
 
+## Version 2020-08-02
+
+ + Add `/Catalogue/SdnTemplate` endpoint
+ + Add `/SDN` endpoint
+ + Document the `cofc` Confirmation of Cover document for Tenants Contents
+ + Document deferred payment frequencies
+
 ## New Product Versions 2020-07-27
 
  + Rent Protection version 89 – Refreshed product with updates to Eligibility Stage questions and validation rules for `TermOfInsurance` and `MonthlyRent`

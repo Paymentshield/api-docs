@@ -30,101 +30,101 @@ Returns a list of documents for the given `QuoteRequestId` or `QuoteId`
 
 ```json
 {
-    "StatusCode": "OK",
-    "Messages": [],
-    "Documents": [
-        {
-            "QuoteRequestId": 633360,
-            "Name": "Policy Booklet",
-            "Code": "terms",
-            "Type": "static",
-            "Link": "https://apiuat.paymentshield.co.uk/Document/terms/633360.pdf"
-        },
-        {
-            "QuoteRequestId": 633360,
-            "Name": "Insurance Product Information Document",
-            "Code": "ipid",
-            "Type": "static",
-            "Link": "https://apiuat.paymentshield.co.uk/Document/ipid/633360.pdf"
-        },
-        {
-            "QuoteRequestId": 633360,
-            "Name": "All Quotes Summary",
-            "Code": "multiquote",
-            "Type": "dynamic",
-            "Criteria": {
-                "BuildingsCoverLevel": 500000,
-                "ContentsCoverLevel": 50000,
-                "BuildingsAD": "Excluded",
-                "ContentsAD": "Excluded"
-            },
-            "Link": "https://apiuat.paymentshield.co.uk/Document/multiquote/633360.pdf?adb=excluded&adc=excluded&bcl=500000&ccl=50000"
-        },
-		...
-        {
-            "QuoteRequestId": 633360,
-            "Name": "All Quotes Summary",
-            "Code": "multiquote",
-            "Type": "dynamic",
-            "Criteria": {
-                "BuildingsCoverLevel": 1000000,
-                "ContentsCoverLevel": 75000,
-                "BuildingsAD": "Included",
-                "ContentsAD": "Included"
-            },
-            "Link": "https://apiuat.paymentshield.co.uk/Document/multiquote/633360.pdf?adb=included&adc=included&bcl=1000000&ccl=75000"
-        },
-        {
-            "QuoteId": "37b322f5-8240-48a5-b362-000bddb544b3",
-            "QuoteRequestId": 633360,
-            "Name": "Quote and Application Summary",
-            "Code": "qas",
-            "Type": "dynamic",
-            "Link": "https://apiuat.paymentshield.co.uk/Document/qas/37b322f5-8240-48a5-b362-000bddb544b3.pdf"
-        },
-        {
-            "QuoteId": "37b322f5-8240-48a5-b362-000bddb544b3",
-            "QuoteRequestId": 633360,
-            "Name": "Statement of Demands and Needs",
-            "Code": "sdn",
-            "Type": "dynamic",
-            "Link": "https://apiuat.paymentshield.co.uk/Document/sdn/37b322f5-8240-48a5-b362-000bddb544b3.pdf"
-        },
-        {
-            "QuoteId": "37b322f5-8240-48a5-b362-000bddb544b3",
-            "QuoteRequestId": 633360,
-            "Name": "Quote Summary",
-            "Code": "quote",
-            "Type": "dynamic",
-            "Criteria": {
-                "PaymentFrequency": "monthly"
-            },
-            "Link": "https://apiuat.paymentshield.co.uk/Document/quote/monthly/37b322f5-8240-48a5-b362-000bddb544b3.pdf"
-        },
-        {
-            "QuoteId": "37b322f5-8240-48a5-b362-000bddb544b3",
-            "QuoteRequestId": 633360,
-            "Name": "Quote Summary",
-            "Code": "quote",
-            "Type": "dynamic",
-            "Criteria": {
-                "PaymentFrequency": "annual"
-            },
-            "Link": "https://apiuat.paymentshield.co.uk/Document/quote/annual/37b322f5-8240-48a5-b362-000bddb544b3.pdf"
-        },
-		...
-        {
-            "QuoteId": "b6cfed8a-b9ce-4035-98a8-f5d0da449c3e",
-            "QuoteRequestId": 633360,
-            "Name": "Quote Summary",
-            "Code": "quote",
-            "Type": "dynamic",
-            "Criteria": {
-                "PaymentFrequency": "annual"
-            },
-            "Link": "https://apiuat.paymentshield.co.uk/Document/quote/annual/b6cfed8a-b9ce-4035-98a8-f5d0da449c3e.pdf"
-        }
-    ]
+  "StatusCode": "OK",
+  "Messages": [],
+  "Documents": [
+    {
+      "QuoteRequestId": 633360,
+      "Name": "Policy Booklet",
+      "Code": "terms",
+      "Type": "static",
+      "Link": "https://apiuat.paymentshield.co.uk/Document/terms/633360.pdf"
+    },
+    {
+      "QuoteRequestId": 633360,
+      "Name": "Insurance Product Information Document",
+      "Code": "ipid",
+      "Type": "static",
+      "Link": "https://apiuat.paymentshield.co.uk/Document/ipid/633360.pdf"
+    },
+    {
+      "QuoteRequestId": 633360,
+      "Name": "All Quotes Summary",
+      "Code": "multiquote",
+      "Type": "dynamic",
+      "Criteria": {
+        "BuildingsCoverLevel": 500000,
+        "ContentsCoverLevel": 50000,
+        "BuildingsAD": "Excluded",
+        "ContentsAD": "Excluded"
+      },
+      "Link": "https://apiuat.paymentshield.co.uk/Document/multiquote/633360.pdf?adb=excluded&adc=excluded&bcl=500000&ccl=50000"
+    },
+    ...
+    {
+      "QuoteRequestId": 633360,
+      "Name": "All Quotes Summary",
+      "Code": "multiquote",
+      "Type": "dynamic",
+      "Criteria": {
+        "BuildingsCoverLevel": 1000000,
+        "ContentsCoverLevel": 75000,
+        "BuildingsAD": "Included",
+        "ContentsAD": "Included"
+      },
+      "Link": "https://apiuat.paymentshield.co.uk/Document/multiquote/633360.pdf?adb=included&adc=included&bcl=1000000&ccl=75000"
+    },
+    {
+      "QuoteId": "37b322f5-8240-48a5-b362-000bddb544b3",
+      "QuoteRequestId": 633360,
+      "Name": "Quote and Application Summary",
+      "Code": "qas",
+      "Type": "dynamic",
+      "Link": "https://apiuat.paymentshield.co.uk/Document/qas/37b322f5-8240-48a5-b362-000bddb544b3.pdf"
+    },
+    {
+      "QuoteId": "37b322f5-8240-48a5-b362-000bddb544b3",
+      "QuoteRequestId": 633360,
+      "Name": "Statement of Demands and Needs",
+      "Code": "sdn",
+      "Type": "dynamic",
+      "Link": "https://apiuat.paymentshield.co.uk/Document/sdn/37b322f5-8240-48a5-b362-000bddb544b3.pdf"
+    },
+    {
+      "QuoteId": "37b322f5-8240-48a5-b362-000bddb544b3",
+      "QuoteRequestId": 633360,
+      "Name": "Quote Summary",
+      "Code": "quote",
+      "Type": "dynamic",
+      "Criteria": {
+        "PaymentFrequency": "monthly"
+      },
+      "Link": "https://apiuat.paymentshield.co.uk/Document/quote/monthly/37b322f5-8240-48a5-b362-000bddb544b3.pdf"
+    },
+    {
+      "QuoteId": "37b322f5-8240-48a5-b362-000bddb544b3",
+      "QuoteRequestId": 633360,
+      "Name": "Quote Summary",
+      "Code": "quote",
+      "Type": "dynamic",
+      "Criteria": {
+        "PaymentFrequency": "annual"
+      },
+      "Link": "https://apiuat.paymentshield.co.uk/Document/quote/annual/37b322f5-8240-48a5-b362-000bddb544b3.pdf"
+    },
+    ...
+    {
+      "QuoteId": "b6cfed8a-b9ce-4035-98a8-f5d0da449c3e",
+      "QuoteRequestId": 633360,
+      "Name": "Quote Summary",
+      "Code": "quote",
+      "Type": "dynamic",
+      "Criteria": {
+        "PaymentFrequency": "annual"
+      },
+      "Link": "https://apiuat.paymentshield.co.uk/Document/quote/annual/b6cfed8a-b9ce-4035-98a8-f5d0da449c3e.pdf"
+    }
+  ]
 }
 ```
 
@@ -157,6 +157,7 @@ ipid        | Insurance Product Information Document, or IPID (Policy Summary)
 terms       | Policy Booklet (Terms and Conditions)
 sdn         | Statement of Demands and Needs.  Only available when the `QuoteStatus` is `SUBMITTED`
 qas         | Quote and Application Summary.  Only available when the `QuoteStatus` is `SUBMITTED`
+cofc        | Confirmation of Cover. Tenants Contents only, available when the `QuoteStatus` is `SUBMITTED`
 multiquote  | All Quotes Summary (Multiple Price Summary)
 
 
@@ -173,7 +174,7 @@ Quote      | One entry for each **QuoteId** in the QuotesResponse    | One entry
 Multiquote | One entry, aggregating all the qualifying quotes        | None
 QAS        | One, for the applied-for quote                          | One, for the applied-for quote
 SDN        | One, after applying for a quote                         | One, after applying for a quote
-
+COfC       | One, after applying for a quote                         | One, after applying for a quote
 
 
 ## Get Document
@@ -187,9 +188,9 @@ Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
 SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
 ```
 
-You can use the `Link` returned for each document to retrieve the document as pdf.  You can request the document as a base64 string by removing **.pdf** from the Link.
+You can use the `Link` returned for each document to retrieve the document as a PDF, which will load with `content-disposition:attachment`.  You can request the document as a base64 string by removing **.pdf** from the Link.
 
-You can also construct a Get Document request string if the Quote Request or QuoteId is known and you know which document you want to retrieve:
+You can also construct a Get Document request string if you know the `QuoteRequestId` or `QuoteId` and you know which document you want to retrieve:
 
 
 Document  | Request string
@@ -199,3 +200,58 @@ Terms     | https://apiuat.paymentshield.co.uk/Document/terms/{QuoteRequestId}
 Quote     | https://apiuat.paymentshield.co.uk/Document/quote/{PaymentFrequency}/{QuoteId}
 QAS       | https://apiuat.paymentshield.co.uk/Document/qas/{QuoteId}
 SDN       | https://apiuat.paymentshield.co.uk/Document/sdn/{QuoteId}
+COfC      | https://apiuat.paymentshield.co.uk/Document/cofc/{QuoteId}
+
+### PaymentFrequency
+
+Please note that there are payment frequencies named `Monthly2MonthsFree` and `Monthly3MonthsDeferred`. One is a 10-month payment plan, and the other is a 9-month payment plan. "Deferred" is the correct language as the total amount paid is still the same as if it were paid in 12 months. The word 'Free' is retained due to internal implementation, but both should be considered as "deferred" payment plans.
+
+
+## Build SDN
+
+> Build an SDN
+
+```http
+POST https://apiuat.paymentshield.co.uk/SDN/4786184 HTTP/1.1
+Content-Type: application/json
+UserId: 123456
+Token: 9c92d88f-d28f-4eb6-8e69-f96707113544
+SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
+
+{
+  "Sections" : [
+    {
+      "InterfaceKey" : "YourDemandsAndNeeds",
+      "Statements" : [
+        "Allows you to utilise your no claims discount",
+        "Covers your home from loss or damage"
+        ]
+    },
+    {
+      "InterfaceKey" : "SuitabilityReasons",
+      "Statements" : [
+        "Is competitively priced",
+        "Includes Personal Possessions cover"
+        ]
+    }
+  ]
+}
+```
+
+A Statement of Demands and Needs (SDN) document contains a number of statements about the suitability of the product to the customer.
+
+If your API login is an Advised user, you must build SDN documents by selecting statements appropriate for the customer before you can download the document.
+
+When creating an SDN using our API, it's your choice as to what free text goes into these demands and needs, but for reference and feature parity with Adviser Hub, you can [use the `/Catalogue/SdnTemplate` endpoint](/#sdn-templates) to get the default list of statements used by Paymentshield.
+
+POST to `/SDN/{QuoteRequestId}` with a list of `Sections` as shown in the code pane example. The `InterfaceKey` elements must match with those from the `SdnTemplate` request for the product. Looking at the SdnTemplate response will also help you as the developer to understand what sentences are being finished by the bullets you submit. I.E. "YourDemandsAndNeeds" statements complete the sentence beginning "Find insurance that:..."
+
+The `Statements` element is a simple array of strings, and you can submit any strings here that accurately describe your customers needs.
+
+<aside class="notice">
+You may submit up to 20 statements per section, and up to 500 characters per statement. Please be aware that because of internal processing rules, your Statements <strong>should not</strong> include the characters '-', ';', carriage return or line feed (<code>\r</code> and <code>\n</code>) as these will be treated as delimiters and will create extra statements.
+</aside>
+
+If you POST more than once to the SDN for a QuoteRequestId, it will have act as a complete overwrite of all statements in all sections, as though the most recent POST were the only one you submitted.
+
+After you have built the SDN with this function, you will be able to see it in the `GET /Documents/` list and will be able to download it from `GET /Document/SDN/{QuoteRequestId}`.
