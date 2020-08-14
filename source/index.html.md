@@ -30,7 +30,7 @@ All API endpoints:
 Service     | Method | URL | Description   |
 ------------|--------|-----|---------------|
 [Security][sec]  | POST   | `/Security/Login`     | Login via email/password or userid/passkey and get a token
-[Security][sec]  | POST   | `/Security/Token`     | Keeps your session token alive without doing an operation
+[Security][sec]  | POST   | `/Security/Refresh`   | Keeps your session token alive without doing an operation
 [Quotes][quo]    | POST   | `/Quote`              | Create a quote
 [Quotes][quo]    | POST   | `/QuickQuote`         | Create a quick quote
 [Quotes][quo]    | GET    | `/Quote/654321`       | Retrieve quote by quote request ID
