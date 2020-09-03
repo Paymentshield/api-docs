@@ -10,5 +10,7 @@ collections:
     label: Sections
     folder: source/includes/
     create: true
+    preview_path: /
+    summary: {{filename}}
     fields:
       - {label: Body, name: body, widget: markdown}
