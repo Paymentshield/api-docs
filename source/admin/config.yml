@@ -11,6 +11,24 @@ collections:
     folder: source/includes/
     create: true
     preview_path: /
+    editor:
+      preview: true
     summary: "{{filename}}"
     fields:
       - {label: Body, name: body, widget: markdown}
+  - name: 'pages'
+    label: 'Pages'
+    create: false
+    preview_path: /
+    editor:
+      preview: true
+    files:
+      - label: 'Main Page'
+        name: 'index'
+        file: 'index.html.md'
+        fields:
+          - { label: 'Title', name: 'title', widget: 'string' }
+          - { label: 'Sections', name: 'includes', widget: 'list' }
+          - { label: 'TOC Links', name: 'toc_footers', widget: 'list' }
+          - { label: 'Body', name: 'body', widget: 'markdown' }
+
