@@ -25,7 +25,7 @@ collections:
     files:
       - label: 'Main Page'
         name: 'index'
-        file: 'index.html.md'
+        file: 'source/index.html.md'
         fields:
           - { label: 'Title', name: 'title', widget: 'string' }
           - { label: 'Sections', name: 'includes', widget: 'list' }
