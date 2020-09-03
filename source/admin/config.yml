@@ -11,6 +11,6 @@ collections:
     folder: source/includes/
     create: true
     preview_path: /
-    summary: {{filename}}
+    summary: "{{filename}}"
     fields:
       - {label: Body, name: body, widget: markdown}
