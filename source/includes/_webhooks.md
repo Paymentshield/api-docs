@@ -93,5 +93,3 @@ When you are subscribed to the `Apply` action and a policy for your `SystemId` i
 If we don't receive the expected response, you should receive an error notification email, and the system will retry on a backing-off basis. The latter is a work in progress.
 
 You can use the Apply Response to update the status of the quote in your system. You can also take it as notification that the final documents, such as QAS and SDN, are available to download.
-
-Test.
