@@ -6,7 +6,7 @@ If you need to know when a quote has been submitted through Adviser Hub, you can
 
 Once you subscribe, we can notify your chosen server URL when certain events happen in our system. Currently the only notifiable event is when a policy is applied for (submitted).
 
-Please get in touch with your technical contact to arrange this, and they will ask for your webhook URL, and a notification email address for when something goes wrong. These settings are scoped to your `SystemId`. We will send you a secret, which is a GUID specific to your integration.
+Please get in touch with your technical contact to arrange this, and they will ask for your webhook URL, and a notification email address for when something goes wrong. These settings are scoped to your `SystemId`. We will send you a secret, which is a GUID specific to your integration. aa
 
 ## Trust
 
