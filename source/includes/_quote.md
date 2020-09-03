@@ -6,6 +6,10 @@ You can use the Quote Service to get Quotes and QuickQuotes and retrieve those y
 
 We use the term 'full integration' to mean integrations which complete a quote and buy journey using only API endpoints. In contrast, a 'partial integration' gets a quote or quick quote from the API and then uses a ContinuationUri that we provide to transfer the user for them to complete the journey in our Adviser Hub web frontend.
 
+<aside class="notice">
+If you are a partial integrator and need to know when a quote has been submitted through Adviser Hub, you can sign up for <a href="#webhooks">our webhooks system</a>.
+</aside>
+
 ### QuoteRequests and Quotes
 
 A **QuoteRequest** is a well-defined request for cover which we submit to one or more insurers. QuoteRequests have sequential integer IDs. If insurers can provide prices for the specified cover, we return these in the response and refer to each insurer offer as a **Quote**, which has a GUID (i.e. `12345678-1234-1234-1234-123456789abc`). A customer can apply for a Quote. 

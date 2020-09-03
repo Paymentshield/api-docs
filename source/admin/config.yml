@@ -1,0 +1,14 @@
+backend:
+  name: github
+  repo: paymentshield/api-docs
+
+media_folder: source/images/uploads
+public_folder: /images/uploads
+
+collections:
+  - name: sections
+    label: Sections
+    folder: source/includes/
+    create: true
+    fields:
+      - {label: Body, name: body, widget: markdown}

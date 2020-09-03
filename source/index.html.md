@@ -15,6 +15,7 @@ includes:
   - quote
   - document
   - catalogue
+  - webhooks
 
 search: true
 ---
