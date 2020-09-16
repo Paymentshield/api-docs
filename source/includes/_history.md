@@ -1,5 +1,9 @@
 # Version History
 
+## Version 2020-09-16
+
++ Tenants Contents version 133 – Refreshed product with replacement of `Applicant1Occupation` and `Applicant2Occupation` with `Applicant1Student` and `Applicant2Student`
+
 ## Version 2020-08-02
 
  + Add `/Catalogue/SdnTemplate` endpoint
