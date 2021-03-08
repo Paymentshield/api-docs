@@ -1,5 +1,11 @@
 # Version History
 
+## Version 2021-03-08
++ Rent Protection version 136 - Moved email address to application stage
++ Added document delivery preference
++ Changed the validation on 'NewLetOrProductTransfer'.
++ Please note update to the product specific rules summary.
+
 ## Version 2020-09-16
 
 + Tenants Contents version 133 – Refreshed product with replacement of `Applicant1Occupation` and `Applicant2Occupation` with `Applicant1Student` and `Applicant2Student`
