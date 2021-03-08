@@ -120,39 +120,30 @@ Please see the code pane for an example of the HTTP headers and JSON request you
 
 ### ProductId
 
-Not all integrators can sell the full range of products. If you want to be authorised to sell a different range of products, please [Get in touch][contact]. 
+Not all integrators can sell the full range of products. If you want to be authorised to sell a different range of products, please [Get in touch](https://paymentshield.co.uk). 
 
 The links in the table below will take you to our Question Set Explorer tool which will give you details of each question.
 
-ProductId | Product
---------- | -------
-[1008][QuestionsetHome]   | Home - Buildings and Contents
-[1009][QuestionsetLL]     | Landlords - Buildings and Contents
-[1010][QuestionsetTL]     | Tenants Liability
-[1011][QuestionsetRP]     | Rent Protection
-[1003][QuestionsetMPPI]   | Mortgage Protection
-[1004][QuestionsetSTIP]   | Income Protection
-[1013][QuestionsetTC]     | Tenants Contents 
+| ProductId                                                                          | Product                            |
+| ---------------------------------------------------------------------------------- | ---------------------------------- |
+| [1008](https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/68)  | Home - Buildings and Contents      |
+| [1009](https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/127) | Landlords - Buildings and Contents |
+| [1010](https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/80)  | Tenants Liability                  |
+| [1011](https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/136)  | Rent Protection                    |
+| [1003](https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/48)  | Mortgage Protection                |
+| [1004](https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/99)  | Income Protection                  |
+| [1013](https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/133) | Tenants Contents                   |
 
-[QuestionsetHome]: https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/68
-[QuestionsetLL]:   https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/127
-[QuestionsetTL]:   https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/80
-[QuestionsetRP]:   https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/89
-[QuestionsetMPPI]: https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/48
-[QuestionsetSTIP]: https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/99  
-[QuestionsetTC]:   https://servicesuat.paymentshield.co.uk/Quotations/QuestionSet/Details/133
- 
- 
 ### Other fields in the create quote request
 
-Field | Details
---------- | -------
-**BranchNumber**             | The `BranchNumber` is provided as part of a user's configuration in our back end system.  To create a Quote Request a user must be authorised to sell the product under the branch number you send in the request.  
-**UseDefaults**              | We recommend that `UseDefaults` is set to true. It sets some Answers, including calculated Answers (total coverage value for STIP/MPPI), to their sensible default or calculated value if you don't specify one.
-**IsIndicativeQuote**        | We recommend that `IsIndicativeQuote` is set to false.  If this is set to true the resulting quotes cannot be applied for.
-**CommissionSacrifice**      | The maximum amount of commission that can be sacrificed by a user is provided as part of a user's configuration in our back end system.  The value sent in the `CommissionSacrifice` field must not exceed the maximum for the user/branch number combination.
-**UserReference**      | An optional field that you can use to record your own cross reference against a quote. You can also use the `UserReference` to search for quotes.
-**Answers**                  |You should include the **InterfaceKey/Values** required for the specified product in the `Answers` array.  Each product has a certain number of mandatory answers that must be provided to get a quote.  
+| Field                   | Details                                                                                                                                                                                                                                                        |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **BranchNumber**        | The `BranchNumber` is provided as part of a user's configuration in our back end system.  To create a Quote Request a user must be authorised to sell the product under the branch number you send in the request.                                             |
+| **UseDefaults**         | We recommend that `UseDefaults` is set to true. It sets some Answers, including calculated Answers (total coverage value for STIP/MPPI), to their sensible default or calculated value if you don't specify one.                                               |
+| **IsIndicativeQuote**   | We recommend that `IsIndicativeQuote` is set to false.  If this is set to true the resulting quotes cannot be applied for.                                                                                                                                     |
+| **CommissionSacrifice** | The maximum amount of commission that can be sacrificed by a user is provided as part of a user's configuration in our back end system.  The value sent in the `CommissionSacrifice` field must not exceed the maximum for the user/branch number combination. |
+| **UserReference**       | An optional field that you can use to record your own cross reference against a quote. You can also use the `UserReference` to search for quotes.                                                                                                              |
+| **Answers**             | You should include the **InterfaceKey/Values** required for the specified product in the `Answers` array.  Each product has a certain number of mandatory answers that must be provided to get a quote.                                                        |
 
 <aside class="notice">
 To find out what values you should send in the <code>Answers</code> array, you can use the Questionset browser for each product by clicking the ProductId in the above table.
@@ -160,8 +151,8 @@ To find out what values you should send in the <code>Answers</code> array, you c
 
 ### Repeating/multi-part Answers
 
- > Example request with multi-part answers
- 
+> Example request with multi-part answers
+
 ```json
 {
   "ProductId": 1008,
@@ -212,11 +203,11 @@ To find out what values you should send in the <code>Answers</code> array, you c
 
 Some of our products have questions that allow repeating answers and have multiple parts to the answer. An example of this is `ContentsItemsToSpecify`, which, when set to true, requires at least one group of the following answers:
 
-RepeatingQuestionSetIndex  | InterfaceKey
--------------------------  | ----------------
-0                          | SpecifiedItemType
-0                          | SpecifiedItemDescription
-0                          | SpecifiedItemValue
+| RepeatingQuestionSetIndex | InterfaceKey             |
+| ------------------------- | ------------------------ |
+| 0                         | SpecifiedItemType        |
+| 0                         | SpecifiedItemDescription |
+| 0                         | SpecifiedItemValue       |
 
 You must send all three answers for the specified item to be added to the quote.
 
@@ -224,21 +215,21 @@ To add a second specified item, you would include another group of answers to th
 
 Each set of multi-part answers, whether for specified items, personal possessions, or previous claims, must have a globally unique integer value for **RepeatingQuestionSetIndex**. For example, you should not use 0 to mark both a Personal Possession and a Previous Claim; they should have different indices:
 
-RepeatingQuestionSetIndex  | InterfaceKey         | Value
--------------------------  | -------------------- | -----------------------
-0                          | PPItemType           | JewelleryOrWatches
-0                          | PPItemDescription    | Swiss watch
-0                          | PPItemValue          | 3500
-1                          | PreviousClaimClaimedUnder | BuildingsOnly
-1                          | PreviousClaimTypeOfLoss   | AccidentalDamage
-1                          | PreviousClaimDateOfLoss   | 20/08/2015
+| RepeatingQuestionSetIndex | InterfaceKey              | Value              |
+| ------------------------- | ------------------------- | ------------------ |
+| 0                         | PPItemType                | JewelleryOrWatches |
+| 0                         | PPItemDescription         | Swiss watch        |
+| 0                         | PPItemValue               | 3500               |
+| 1                         | PreviousClaimClaimedUnder | BuildingsOnly      |
+| 1                         | PreviousClaimTypeOfLoss   | AccidentalDamage   |
+| 1                         | PreviousClaimDateOfLoss   | 20/08/2015         |
 
 ### Strategies for unique RepeatingQuestionSetIndex
 
 Here are two strategies for setting correct values for `RepeatingQuestionSetIndex` in your integration:
 
- 1. You could keep a global count of repeating sections in your state store and apply it to the corresponding Answer nodes in your request
- 2. You could assume a maximum for each repeating group and treat it as an offset, so that all SpecifiedItems begin at 0, PersonalPossessions begin at 10, and PreviousClaims begin at 20, for example.
+1. You could keep a global count of repeating sections in your state store and apply it to the corresponding Answer nodes in your request
+2. You could assume a maximum for each repeating group and treat it as an offset, so that all SpecifiedItems begin at 0, PersonalPossessions begin at 10, and PreviousClaims begin at 20, for example.
 
 The numbering of `RepeatingQuestionSetIndex` in our **response** will always start at **0**, even if your request started at 1 (or higher). Our numbering in the response will be **contiguous** (i.e. no gaps in numbering starting from 0) even if your request had gaps. 
 
@@ -260,7 +251,7 @@ If you use <code>Edit Quote</code> to create a variant of a quote request linked
 
 ## Quote Response
 
- > Example Quote Response
+> Example Quote Response
 
 ```json
 {
@@ -434,53 +425,52 @@ If you use <code>Edit Quote</code> to create a variant of a quote request linked
 	
     ]
 }
-
 ```
 
 A successful Quote response includes the following information:
 
-Field | Details
---------- | -------
-**StatusCode**                 | A successful response will have a status code of OK.
-**Messages**                   | For a successful response, this will be an empty array.
-**QuoteRequestId**             | The unique integer ID for the Quote Request.  Used in other API calls to retrieve Quotes and Documents.
-**QuoteReference**             | The full Paymentshield Quote Reference that should be relayed to a customer and will display on documents.
-**QuoteStatus**                | Reflects the state of the quote in the Paymentshield system.  A new quote will have a status of 'QUOTESRETRIEVED'
-**ProductId**                  | Confirmation of the ProductId sent on the quote request.
-**QuoteSessionId**             | A reference unique to a series of linked quotes.
-**QuoteSessionContinuationUri**| A continuation URI that can be used to transfer the user to the Paymentshield quote and apply journey to continue the session.
-**QuoteRequestContinuationUri**| A continuation URI that can be used to transfer the user to the Paymentshield quote and apply journey to continue the quote request.
-**QuoteDate**                  | Confirmation of the date and time the quote was created in our system.
-**QuoteExpiryDate**            | The received quote can be applied for up to the Quote Expiry Date.
-**IsMultiTier**                | A flag set in our back end system that determines the number of alternative quotes that we will return in the quote response.
-**IsIndicativeQuote**          | Confirmation of the value passed in the Quotes request message.
-**CommissionSacrifice**        | Confirmation of the value passed in the Quotes request message.
-**UserReference**              | Confirmation of the value passed in the Quotes request message.
-**Quotes array**                | Explained below
-**Prices array**                | Explained below
-**Answers array**               | We use the **Answers** array to replay the answers that were sent in the Quotes request message.
+| Field                           | Details                                                                                                                              |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| **StatusCode**                  | A successful response will have a status code of OK.                                                                                 |
+| **Messages**                    | For a successful response, this will be an empty array.                                                                              |
+| **QuoteRequestId**              | The unique integer ID for the Quote Request.  Used in other API calls to retrieve Quotes and Documents.                              |
+| **QuoteReference**              | The full Paymentshield Quote Reference that should be relayed to a customer and will display on documents.                           |
+| **QuoteStatus**                 | Reflects the state of the quote in the Paymentshield system.  A new quote will have a status of 'QUOTESRETRIEVED'                    |
+| **ProductId**                   | Confirmation of the ProductId sent on the quote request.                                                                             |
+| **QuoteSessionId**              | A reference unique to a series of linked quotes.                                                                                     |
+| **QuoteSessionContinuationUri** | A continuation URI that can be used to transfer the user to the Paymentshield quote and apply journey to continue the session.       |
+| **QuoteRequestContinuationUri** | A continuation URI that can be used to transfer the user to the Paymentshield quote and apply journey to continue the quote request. |
+| **QuoteDate**                   | Confirmation of the date and time the quote was created in our system.                                                               |
+| **QuoteExpiryDate**             | The received quote can be applied for up to the Quote Expiry Date.                                                                   |
+| **IsMultiTier**                 | A flag set in our back end system that determines the number of alternative quotes that we will return in the quote response.        |
+| **IsIndicativeQuote**           | Confirmation of the value passed in the Quotes request message.                                                                      |
+| **CommissionSacrifice**         | Confirmation of the value passed in the Quotes request message.                                                                      |
+| **UserReference**               | Confirmation of the value passed in the Quotes request message.                                                                      |
+| **Quotes array**                | Explained below                                                                                                                      |
+| **Prices array**                | Explained below                                                                                                                      |
+| **Answers array**               | We use the **Answers** array to replay the answers that were sent in the Quotes request message.                                     |
 
 ### Quotes array
 
 For each insurer quote we receive, we return the following data:
 
-Field | Details
---------- | -------
-**QuoteId**| A unique quote GUID.  Used in other API calls to retrieve documents and to apply for a quote. 
-**InsurerName**| The customer facing insurer name as will appear on customer documents.
-**ProductName**| The customer facing product name as will appear on customer documents.
-**Cover**| For products that support multi-tier the cover node provides a summary of the basis of each quote.  The **IsRequested** flag will be `true` for the cover that exactly matches the quote request.
-**Premiums**| The premiums node provides a link to the **PriceId** for each payment type/frequency option available for the quote.
-**Endorsements**| If one of our insurers returns an endorsement the text will be provided in the endorsements field for you display to your customer.
+| Field            | Details                                                                                                                                                                                           |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **QuoteId**      | A unique quote GUID.  Used in other API calls to retrieve documents and to apply for a quote.                                                                                                     |
+| **InsurerName**  | The customer facing insurer name as will appear on customer documents.                                                                                                                            |
+| **ProductName**  | The customer facing product name as will appear on customer documents.                                                                                                                            |
+| **Cover**        | For products that support multi-tier the cover node provides a summary of the basis of each quote.  The **IsRequested** flag will be `true` for the cover that exactly matches the quote request. |
+| **Premiums**     | The premiums node provides a link to the **PriceId** for each payment type/frequency option available for the quote.                                                                              |
+| **Endorsements** | If one of our insurers returns an endorsement the text will be provided in the endorsements field for you display to your customer.                                                               |
 
 ### Prices array
 
 For each unique **PriceId** returned in **Quotes**, we provide a breakdown of values relevant to the product:
 
-Field | Details
---------- | -------
-**ID**| Each **ID** in the **Prices** node will be referenced by a **PriceId** in the **Quotes** node. These IDs are ephemeral and will not be the same between two responses, even if the Price data is the same.
-**Values**| The breakdown of values returned will be specific to the productId requested.
+| Field      | Details                                                                                                                                                                                                    |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **ID**     | Each **ID** in the **Prices** node will be referenced by a **PriceId** in the **Quotes** node. These IDs are ephemeral and will not be the same between two responses, even if the Price data is the same. |
+| **Values** | The breakdown of values returned will be specific to the productId requested.                                                                                                                              |
 
 ### Continuation URI
 
@@ -488,68 +478,65 @@ For 'Partial Integrators', who wish to create a quote but transfer the user to o
 As long as the User has activated their Adviser Hub account the URI provides a silent logon to our quote and apply application.
 You may encounter three types of ContinuationUris as per the table below:
 
-URI type | Details
---------- | -------
-QuoteSessionContinuationUri | This is returned in a successful Post and Get Quote response.  The URI can be used to transfer the user to latest stage they were at in the quote journey.  If multiple linked quotes exist the `QuoteSessionContinuationUri` will transfer the user to the latest quote created.
-QuoteRequestContinuationUri | This is returned in a successful Post Quote response and in a Get Quote response providing neither the quote request nor any of its linked quotes have been applied for.  The `QuoteRequestContinuationUri` will transfer the user to the latest point in the quote sent in the request.
-QuickQuoteContinuationUri   | This is returned in a successful Post QuickQuote response.  The URI can be used to transfer the user to our web based quote and apply journey to confirm assumptions and continue to generate a full quote.
+| URI type                    | Details                                                                                                                                                                                                                                                                                  |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| QuoteSessionContinuationUri | This is returned in a successful Post and Get Quote response.  The URI can be used to transfer the user to latest stage they were at in the quote journey.  If multiple linked quotes exist the `QuoteSessionContinuationUri` will transfer the user to the latest quote created.        |
+| QuoteRequestContinuationUri | This is returned in a successful Post Quote response and in a Get Quote response providing neither the quote request nor any of its linked quotes have been applied for.  The `QuoteRequestContinuationUri` will transfer the user to the latest point in the quote sent in the request. |
+| QuickQuoteContinuationUri   | This is returned in a successful Post QuickQuote response.  The URI can be used to transfer the user to our web based quote and apply journey to confirm assumptions and continue to generate a full quote.                                                                              |
 
 ## Create Partial Quote
 
- > Json showing the IsPartialQuote parameter used to create a Partial Quote
- 
- ```json
+> Json showing the IsPartialQuote parameter used to create a Partial Quote
+
+```json
 {
-  "ProductId": 1008,
-  "BranchNumber": "AB000000",
-  "UseDefaults": true,
-  "IsIndicativeQuote": false,
-  "CommissionSacrifice": 0,
-  "IsPartialQuote": true,
-  "Answers": [
-    {
-      "Value": "Mrs",
-      "InterfaceKey": "Applicant1Title"
-    },
-    {
-      "Value": "Kayleigh",
-      "InterfaceKey": "Applicant1Forename"
-    },
-    {
-      "Value": "Porter",
-      "InterfaceKey": "Applicant1Surname"
-    },
-    ...
-    {
-      "Value": "One",
-      "InterfaceKey": "NumberOfBedrooms"
-    },
-    {
-      "Value": "Flat",
-      "InterfaceKey": "PropertyType"
-    },
-    ...
-  ]
+ "ProductId": 1008,
+ "BranchNumber": "AB000000",
+ "UseDefaults": true,
+ "IsIndicativeQuote": false,
+ "CommissionSacrifice": 0,
+ "IsPartialQuote": true,
+ "Answers": [
+   {
+     "Value": "Mrs",
+     "InterfaceKey": "Applicant1Title"
+   },
+   {
+     "Value": "Kayleigh",
+     "InterfaceKey": "Applicant1Forename"
+   },
+   {
+     "Value": "Porter",
+     "InterfaceKey": "Applicant1Surname"
+   },
+   ...
+   {
+     "Value": "One",
+     "InterfaceKey": "NumberOfBedrooms"
+   },
+   {
+     "Value": "Flat",
+     "InterfaceKey": "PropertyType"
+   },
+   ...
+ ]
 }
 ```
 
-There are two main reasons that you might build your integration to submit ['partial' quote requests][partial]:
+There are two main reasons that you might build your integration to submit ['partial' quote requests](#full-vs-partial-integration):
 
- 1. If you want to start a quote with a small amount of information, save it, and update it with more information when available or resume the journey later in our Adviser Hub web frontend.
- 2. If you want to capture some information in your application, and transfer right away to our web frontend to complete the quote and buy journey.
- 
-If you send the `IsPartialQuote` parameter with a value of `true` in a [POST Quote request][postquote], then we skip part of the validation logic, so that the request is not refused, but instead returns a response where the `QuoteStatus` is `INPROGRESS`.
+1. If you want to start a quote with a small amount of information, save it, and update it with more information when available or resume the journey later in our Adviser Hub web frontend.
+2. If you want to capture some information in your application, and transfer right away to our web frontend to complete the quote and buy journey.
+
+If you send the `IsPartialQuote` parameter with a value of `true` in a [POST Quote request](#create-quote), then we skip part of the validation logic, so that the request is not refused, but instead returns a response where the `QuoteStatus` is `INPROGRESS`.
 
 If omitted, the `IsPartialQuote` value defaults to `false`.
- 
+
 In the response, you will receive a `QuoteRequestId` and a `QuoteSessionContinuationUri` that you can use to transfer to our quote and apply journey to complete the remaining questions and obtain a full quote.  When you transfer to our journey the answers you provided will be pre-populated.
 
 <aside class="notice">
 If you send a Quotes request with <code>IsPartialQuote</code> set to <code>true</code>, but send answers to all mandatory questions, the <code>QuoteStatus</code> will still be returned as <code>INPROGRESS</code>.  This allows for subsequent addition of non-mandatory answers before requesting the full quote response.
 </aside>
-
-[partial]: #full-vs-partial-integration
-[postquote]: #create-quote
 
 ### Update a Partial Quote
 
@@ -566,8 +553,8 @@ To update answers for an existing quote, it must be at status <code>INPROGRESS</
 
 ## Create QuickQuote
 
- > Create a QuickQuote
- 
+> Create a QuickQuote
+
 ```http
 POST https://apiuat.paymentshield.co.uk/QuickQuote/ HTTP/1.1
 Content-Type: application/json
@@ -622,7 +609,6 @@ SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
 
 A QuickQuote is an indicative price which you can get by submitting less information about the customer. You can allow your customer to pick up their QuickQuote journey in our frontend using the `QuickQuoteContinuationUri`. 
 
-
 Today, QuickQuote is only implemented for Home insurance (product 1008).
 
 <aside class="warning">
@@ -631,20 +617,20 @@ You can't apply for QuickQuote quotes because they don't have enough information
 
 You must supply the following answers as a minimum:
 
- * Applicant1Title
- * Applicant1Forename
- * Applicant1Surname
- * Applicant1DoB
- * NoClaimsBuildings
- * NoClaimsContents
- * PropertyType
- * NumberOfBedrooms
- * BuildYear
- * InsuredAddressPostCode
- * InsuredAddressStreet
- * InsuredAddressDistrict
- * InsuredAddressTown
- * InsuredAddressCounty
+* Applicant1Title
+* Applicant1Forename
+* Applicant1Surname
+* Applicant1DoB
+* NoClaimsBuildings
+* NoClaimsContents
+* PropertyType
+* NumberOfBedrooms
+* BuildYear
+* InsuredAddressPostCode
+* InsuredAddressStreet
+* InsuredAddressDistrict
+* InsuredAddressTown
+* InsuredAddressCounty
 
 We add assumptions for all other mandatory questions in order to return a price in the response.  The assumptions we use are replayed back to you in the Quick Quote Response.
 
@@ -655,29 +641,28 @@ Please see the code pane for an example of QuickQuote request message.
 If you are integrating from another application and have more information available than the above list of minimum data requirements you can send additional fields.  The more information you are able to provide in the quick quote request the more accurate the quote response will be.  
 
 ### Third Party Property Data
- 
+
 If you send the `UseThirdPartyData` parameter with a value of `true` in a POST QuickQuote request, you can omit the following three fields from the QuickQuote request:
 
- * PropertyType
- * NumberOfBedrooms
- * BuildYear
+* PropertyType
+* NumberOfBedrooms
+* BuildYear
 
 We will use the address details sent in the request to call a third party data provider to source the property details which will then be added to the request.
 
 If omitted, the `UseThirdPartyData` value defaults to `false`.
 
-
 ### QuickQuotesResponse
 
 We deliver a `QuickQuotesResponse` in response to both the 'Create' and 'Get' QuickQuote operations. This object has some differences from a normal QuotesResponse:
 
- + It has a `QuickQuoteContinuationUri` instead of `QuoteSessionContinuationUri`
- + Only the cheapest Price is returned, instead of many prices
- + We confirm the source of each `Value` in the `Answers` array using a `Source` field which will either return as 'User' if supplied in the request, 'ThirdParty' if the value has been sourced from an external data provider or 'Assumed' if the value has been assumed.
- 
- > Error returned when unable to source ThirdPartyData
- 
-~~~json
+* It has a `QuickQuoteContinuationUri` instead of `QuoteSessionContinuationUri`
+* Only the cheapest Price is returned, instead of many prices
+* We confirm the source of each `Value` in the `Answers` array using a `Source` field which will either return as 'User' if supplied in the request, 'ThirdParty' if the value has been sourced from an external data provider or 'Assumed' if the value has been assumed.
+
+> Error returned when unable to source ThirdPartyData
+
+```json
 {
     "StatusCode": "NoDataWarning",
     "Messages": [
@@ -687,7 +672,7 @@ We deliver a `QuickQuotesResponse` in response to both the 'Create' and 'Get' Qu
         }
     ]
 }
-~~~
+```
 
 If you send the `UseThirdPartyData` parameter with a value of `true` and we are unable to source the property data we will return an `error` response as per the example provided.
 
@@ -705,11 +690,10 @@ The edit function creates a totally new `QuoteRequestId` so the request should i
 To create a new version of a quote using the edit function, the existing quote must be at status <code>QUOTESRETRIEVED</code>. 
 </aside>
 
-
 ## Retrieve Quote
 
- > Retrieve a set of Quotes by QuoteRequestId
- 
+> Retrieve a set of Quotes by QuoteRequestId
+
 ```http
 GET https://apiuat.paymentshield.co.uk/Quote/{QuoteRequestId} HTTP/1.1
 UserId: 123456
@@ -723,7 +707,7 @@ Pass the integer `QuoteRequestId` from the original Quote Response.
 
 ### Linked Quotes
 
- > Example of LinkedQuotes in a GET Quote Response
+> Example of LinkedQuotes in a GET Quote Response
 
 ```json
 {
@@ -773,18 +757,16 @@ Please see the code pane for an example of this.  In the response shown the user
 
 Note that each `QuoteRequestId` has its own `QuoteStatus`.  Only one of the linked quotes can have a status of `SUBMITTED`.
 
-
 ### QuoteStatus Codes
 
 You may encounter the following `QuoteStatus` codes in a Get Quote response:
 
-QuoteStatus | Meaning
---------- | -------
-INPROGRESS      | A quote has been started in our system but not yet been submitted for pricing.
-QUOTESRETRIEVED | The Quote Request has been submitted for pricing and prices have been returned.
-SUBMITTED       | One of the quotes returned under the Quote Request ID has been applied for.
-UNABLETOQUOTE   | The Quote Request has been submitted for pricing but we have been unable to return a quote. 
-
+| QuoteStatus     | Meaning                                                                                     |
+| --------------- | ------------------------------------------------------------------------------------------- |
+| INPROGRESS      | A quote has been started in our system but not yet been submitted for pricing.              |
+| QUOTESRETRIEVED | The Quote Request has been submitted for pricing and prices have been returned.             |
+| SUBMITTED       | One of the quotes returned under the Quote Request ID has been applied for.                 |
+| UNABLETOQUOTE   | The Quote Request has been submitted for pricing but we have been unable to return a quote. |
 
 ### Retrieve QuickQuote
 
@@ -804,7 +786,7 @@ If the user has progressed a QuickQuote by adding information, so that it now ha
 ## Search Quotes
 
 > Search for Quotes by UserReference
- 
+
 ```http
 GET https://apiuat.paymentshield.co.uk/Quotes/?UserReference=YourRef_123 HTTP/1.1
 UserId: 123456
@@ -815,7 +797,6 @@ SystemId: 56cba828-1376-4ced-96d4-11a950e4afe8
 > Example of GET Quotes response
 
 ```json
-
 {
     "StatusCode": "OK",
     "Messages": [
@@ -869,10 +850,9 @@ Use the `GET Quotes` (plural) endpoint to search for quotes based on different c
 
 We are expanding this feature. It currently supports the following fields as search criteria:
 
-Field       | Definition
------------ | -------
-UserReference   | Your reference attached to the quote using the `UserReference` field
-
+| Field         | Definition                                                           |
+| ------------- | -------------------------------------------------------------------- |
+| UserReference | Your reference attached to the quote using the `UserReference` field |
 
 Use the `GET Quotes` endpoint specifying a UserReference to get a list of quotes with a matching UserReference value. You must provide the full reference, not a fragment or wildcard.
 
@@ -882,7 +862,6 @@ Please see the code pane for an example of the JSON response.  In the example us
 
 We return some key information about each QuoteRequest to help you to identify the quote required. 
 You can use the `Link` returned in the response to make a `GET Quote` request to retrieve the fully-hydrated quote response.
-
 
 ## Apply
 
@@ -960,7 +939,3 @@ You can find the list and descriptions of the 'Application Stage' questions in t
 The Apply Response resembles the [Quote Response](#quote-response), with many of the same fields.
 
 On successful application, the `QuoteStatus` will be `SUBMITTED`. If the request fails, the status will stay at `QUOTESRETRIEVED`.
-
-
-[contact]: https://paymentshield.co.uk
-[developerportal]: https://paymentshield.co.uk
